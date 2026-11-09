@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Checkpoint 7: winner-only non-damaging flourish, camera change, original bilingual captions and generated-tone audio.
+
 - Checkpoint 6: bilingual React title/select/HUD/settings/results, keyboard remapping, gamepad sampling, safe-area touch controls and accessibility settings.
 
 - Checkpoint 5: seeded easy/normal/hard CPU module, shared-input tests, optional CPU combat lab.
