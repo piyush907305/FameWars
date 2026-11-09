@@ -1,0 +1,80 @@
+[
+  {
+    "id": "dynamo",
+    "name": {
+      "en": "Dhamaal Dynamo",
+      "hi": "धमाल डायनेमो"
+    },
+    "archetype": "action-star",
+    "licenseStatus": "original",
+    "killSwitchKey": "fighters.dynamo.enabled",
+    "palette": [
+      "#2ee6b8",
+      "#203344",
+      "#ffb75c"
+    ],
+    "body": {
+      "radius": 260,
+      "height": 1800
+    },
+    "moves": [
+      "light",
+      "heavy",
+      "kick",
+      "super"
+    ],
+    "visual": {
+      "style": "primitive",
+      "prop": "star"
+    },
+    "catchphrase": {
+      "en": "Cut! Now bring the snacks.",
+      "hi": "कट! अब नाश्ता लाओ।"
+    },
+    "provenance": {
+      "provider": "project-authored-primitives",
+      "licence": "original",
+      "date": "2026-11-09",
+      "realPersonImitation": false
+    }
+  },
+  {
+    "id": "chalk",
+    "name": {
+      "en": "Captain Chalk",
+      "hi": "कैप्टन चॉक"
+    },
+    "archetype": "cricket-captain",
+    "licenseStatus": "original",
+    "killSwitchKey": "fighters.chalk.enabled",
+    "palette": [
+      "#a794ff",
+      "#302c52",
+      "#ffd35a"
+    ],
+    "body": {
+      "radius": 260,
+      "height": 1800
+    },
+    "moves": [
+      "light",
+      "heavy",
+      "kick",
+      "super"
+    ],
+    "visual": {
+      "style": "primitive",
+      "prop": "captain"
+    },
+    "catchphrase": {
+      "en": "The scoreboard needs a tea break.",
+      "hi": "स्कोरबोर्ड को चाय की छुट्टी चाहिए।"
+    },
+    "provenance": {
+      "provider": "project-authored-primitives",
+      "licence": "original",
+      "date": "2026-11-09",
+      "realPersonImitation": false
+    }
+  }
+]

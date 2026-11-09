@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Checkpoint 1: deterministic sim, validated original content, state transitions, stamina/round logic and golden replay tests.
+
 - Approved Phase 1 baseline: Fame Wars, 45-second rounds, winner finisher, 3-frame buffer, client/AI module separation and placeholder release.
 
 ## [0.0.0] — 2026-11-09

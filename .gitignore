@@ -9,3 +9,6 @@ test-results/
 !.env.example
 *.log
 assets/source/private/
+
+.cache/
+.sites-runtime/
