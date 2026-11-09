@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Checkpoint 5: seeded easy/normal/hard CPU module, shared-input tests, optional CPU combat lab.
+
 - Checkpoint 4: verified all move/resource/round rules including simultaneous trades, timeout priority, super cost, three-frame buffer and best-of-three.
 
 - Checkpoint 3: primitive fictional fighters, merged static Film City geometry and interpolated side-view camera.
