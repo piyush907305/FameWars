@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Checkpoint 6: bilingual React title/select/HUD/settings/results, keyboard remapping, gamepad sampling, safe-area touch controls and accessibility settings.
+
 - Checkpoint 5: seeded easy/normal/hard CPU module, shared-input tests, optional CPU combat lab.
 
 - Checkpoint 4: verified all move/resource/round rules including simultaneous trades, timeout priority, super cost, three-frame buffer and best-of-three.
