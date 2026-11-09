@@ -1,0 +1,40 @@
+name: Phase 0 documentation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check required documents and relative file links
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          root = Path('.')
+          required = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md']
+          required += [f'docs/{n}' for n in [
+            '01-game-brief.md', '02-architecture.md', '03-data-schemas.md',
+            '04-art-and-ai-asset-pipeline.md', '05-voice-pipeline.md',
+            '06-device-and-performance-targets.md', '07-networking-strategy.md',
+            '08-monetisation-and-ads.md', '09-legal-and-content-policy.md',
+            '10-backlog.md', '11-risks-and-open-questions.md']]
+          errors = [f'Missing: {p}' for p in required if not (root / p).is_file()]
+          for p in root.rglob('*.md'):
+            if '.git' in p.parts:
+              continue
+            for target in re.findall(r'(?<!!)\[[^\]]*\]\(([^)]+)\)', p.read_text()):
+              if '://' in target or target.startswith(('mailto:', '#')):
+                continue
+              target = target.split('#', 1)[0]
+              if target and not (p.parent / target).exists():
+                errors.append(f'{p}: missing link {target}')
+          assert not errors, '\n'.join(errors)
+      # Phase 1: pin third-party action SHAs and Node/pnpm; install --frozen-lockfile;
+      # lint, typecheck, content validation, sim tests, Playwright and bundle budgets.
+      # No package, server, deployment credentials or gameplay checks exist yet.
