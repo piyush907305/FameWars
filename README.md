@@ -20,7 +20,7 @@ pnpm build
 pnpm preview
 ```
 
-Open `http://localhost:4173/`. Static output is `dist/`; do not open index.html directly from disk. A matching private hosted preview uses the Sites configuration in `.openai/hosting.json`; GitHub target is https://github.com/piyush907305/FameWars (visibility approval pending). This is not a public production launch or approved Phase 2.
+Open `http://localhost:4173/`. Static output is `dist/`; do not open index.html directly from disk. A matching private hosted preview uses the Sites configuration in `.openai/hosting.json`; GitHub target is https://github.com/piyush907305/FameWars (public source publication approved by owner). This is not a public production launch or approved Phase 2.
 
 ## Play
 
@@ -77,4 +77,4 @@ The validated content is passed explicitly to sim instead of imported as mutable
 
 ## Git and ownership
 
-Small checkpoint commits are on named feature branches, integrated into main for release; v0.0.0 preserves Phase 0, v0.1.0 marks this prototype. Owner supplied https://github.com/piyush907305/FameWars. Access is verified; GitHub reports public visibility, so source publication is pending owner confirmation (A34). A Git bundle in the handoff preserves all commits/branches/tags and can be cloned normally. Sites' source store is separate from GitHub. The remote has an initial README commit; integration will preserve that history. No open-source licence is granted by default; original project code/content and third-party dependencies retain their respective rights. Exact dependency versions and lockfile committed; future updates deliberate.
+Small checkpoint commits are on named feature branches, integrated into main for release; v0.0.0 preserves Phase 0, v0.1.0 marks this prototype. Owner supplied https://github.com/piyush907305/FameWars. Access is verified and public source publication was approved by the owner (A34). A Git bundle in the handoff preserves all commits/branches/tags and can be cloned normally. Sites' source store is separate from GitHub. The remote has an initial README commit; integration will preserve that history. No open-source licence is granted by default; original project code/content and third-party dependencies retain their respective rights. Exact dependency versions and lockfile committed; future updates deliberate.

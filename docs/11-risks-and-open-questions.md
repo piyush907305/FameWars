@@ -91,3 +91,5 @@ ASSUMPTION A34: GitHub account supplied by owner is piyush907305; infer private 
 A34 update: GitHub connection verified as piyush907305. Native connector lacks repository creation; separate browser is signed out. Owner asked to create/access-grant empty private fame-wars and provide URL. No remote created or pushed yet.
 
 A34 update: Owner provided https://github.com/piyush907305/FameWars; access verified. It has an initial README commit and public visibility. Publication awaits explicit public approval or a change to private.
+
+A34 resolved: owner explicitly approved public source publication to https://github.com/piyush907305/FameWars. Hosted preview remains owner-private.
