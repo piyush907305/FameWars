@@ -19,7 +19,7 @@ function fighter(def:FighterDef):Puppet {
 }
 function sign(text:string,color:string){const canvas=document.createElement('canvas');canvas.width=512;canvas.height=128;const x=canvas.getContext('2d')!;x.fillStyle='#11202b';x.fillRect(0,0,512,128);x.strokeStyle=color;x.lineWidth=8;x.strokeRect(8,8,496,112);x.fillStyle=color;x.font='bold 42px sans-serif';x.textAlign='center';x.fillText(text,256,80);const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return new THREE.MeshBasicMaterial({map:texture});}
 export class Renderer {
- readonly engine:THREE.WebGLRenderer;private scene=new THREE.Scene();private camera=new THREE.PerspectiveCamera(38,1,.1,60);private puppets:[Puppet,Puppet];private debugMeshes:THREE.Mesh[]=[];private observer:ResizeObserver;debug=false;reduced=false;style:'boxes'|'3d'='3d';drawCalls=0;triangles=0;
+ readonly engine:THREE.WebGLRenderer;private scene=new THREE.Scene();private camera=new THREE.PerspectiveCamera(38,1,.1,60);private puppets:[Puppet,Puppet];private debugMeshes:THREE.Mesh[]=[];private observer:ResizeObserver;debug=false;reduced=false;style:'boxes'|'3d'='3d';drawCalls=0;triangles=0; // Geometry/material resources are owned by this renderer, never by sim.
  constructor(private canvas:HTMLCanvasElement,ids:[string,string]){
   this.engine=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'low-power'});this.engine.setPixelRatio(Math.min(devicePixelRatio,1.5));this.engine.outputColorSpace=THREE.SRGBColorSpace;this.scene.background=new THREE.Color('#111f30');this.scene.fog=new THREE.Fog('#111f30',9,25);
   this.scene.add(new THREE.HemisphereLight('#c3e5ff','#6b3f4c',2.8));const key=new THREE.DirectionalLight('#fff0cf',3);key.position.set(-3,6,5);this.scene.add(key);

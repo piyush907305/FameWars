@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Checkpoint 3: primitive fictional fighters, merged static Film City geometry and interpolated side-view camera.
+
 - Checkpoint 2: keyboard-driven combat lab, wireframe hitboxes/hurtboxes and sim state readout.
 
 - Checkpoint 1: deterministic sim, validated original content, state transitions, stamina/round logic and golden replay tests.
