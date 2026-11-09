@@ -6,7 +6,7 @@
 
 ## Pitch and pillars
 
-**[GAME TITLE]** is an India-first browser 2.5D comedy fighter. Two original fictional personalities contest short, readable best-of-three matches. Stamina management creates a dramatic signature-finisher moment; synthetic catchphrases and bilingual subtitles make it shareable without gore.
+**Fame Wars** is an India-first browser 2.5D comedy fighter. Two original fictional personalities contest short, readable best-of-three matches. Stamina management creates a dramatic signature-finisher moment; synthetic catchphrases and bilingual subtitles make it shareable without gore.
 
 Pillars: readable touch-first combat; funny character-specific reactions; fair mechanics independent of spending; fast cold start on 4G; small, maintainable content pipeline. The reference game is a genre/flow reference, not a source of code, art, recordings or branding.
 
@@ -14,13 +14,13 @@ ASSUMPTION A01: public launch is adults 18+ initially, Hindi and English, India 
 
 ## Prototype v0.1.0 boundary
 
-Two fighters; one original rooftop-studio arena; local two-player and vs CPU; first to two round wins; movement, jump, crouch, block, light/heavy attack, kick, super, signature finisher. Dash is explicitly included because the stamina brief names it (ASSUMPTION A03). Keyboard, gamepad and touch supported. Same-device touch defaults to one human vs CPU; local two-human uses keyboard/gamepads, with experimental shared-touch subject to user decision (A04).
+Two fighters; one original Film City street arena; local two-player and vs CPU; first to two round wins; movement, jump, crouch, block, light/heavy attack, kick, super, signature finisher. Dash is explicitly included because the stamina brief names it (ASSUMPTION A03). Keyboard, gamepad and touch supported. Same-device touch defaults to one human vs CPU; local two-human uses keyboard/gamepads, with experimental shared-touch subject to user decision (A04).
 
-Out: online/auth/accounts/rankings, live ads or monetisation, player chat/uploads, cosmetics shop, global distribution, real-person fighters, dynamic AI inference, native binaries, advanced facial animation. Required consent/policy UI and mock ad-flow definitions may be reviewed without loading an SDK. v0.1.0 includes the Phase 2 art benchmark and Phase 3 prototype feature completion; earlier milestones are v0.1.0-alpha builds.
+Out: online/auth/accounts/rankings, live ads or monetisation, player chat/uploads, cosmetics shop, global distribution, real-person fighters, dynamic AI inference, native binaries, advanced facial animation. Required consent/policy UI and mock ad-flow definitions may be reviewed without loading an SDK. Approved Phase 1 v0.1.0 is the complete placeholder-art prototype. Polished art and AI assets move to Phase 2; no AI assets are required for this release.
 
 ## Proposed exact rules (approval required)
 
-All values below are **design decisions proposed for testing**, not claims of balance. 60 simulation ticks/second. Health 1,000, stamina 10,000, super meter 1,000. Full reset each round. Timer 3,600 ticks (60 seconds); intro and finisher do not consume it. Two simultaneous input slots, stable slot order for bookkeeping only. World units are integer millimetres; stage fighting limits -4,000..4,000; root y is ground height. Stage depth does not affect combat.
+All values below are **design decisions proposed for testing**, not claims of balance. 60 simulation ticks/second. Health 1,000, stamina 10,000, super meter 1,000. Full reset each round. Timer 2,700 ticks (45 seconds); intro and finisher do not consume it. Two simultaneous input slots, stable slot order for bookkeeping only. World units are integer millimetres; stage fighting limits -4,000..4,000; root y is ground height. Stage depth does not affect combat.
 
 Attacks pay stamina atomically at valid startup. Insufficient stamina: no attack. Block pays 80 on entry plus 20/tick while held; empty stamina prevents blocking. Dash costs 1,200, lasts 12 ticks, no invulnerability; insufficient stamina denies it. Idle is grounded neutral with no block, movement, stun or attack; regeneration begins after 45 such consecutive ticks at 100/tick. Walking/jumping/crouching do not regenerate. Cap all resources; no negative values. Hitting exactly zero stamina enters 45-tick stagger at the end of the simultaneous resolution step. Interrupt the action; no attacks/block/dash/regen during stagger. Recover to 1,500 after stagger, reset idle delay. If health is zero, KO takes priority over stagger.
 
@@ -28,7 +28,8 @@ Block is an explicit action, facing the opponent. Standing blocks high/mid; crou
 
 Round-ending order: resolve all active hits simultaneously, apply health/resource changes, freeze a terminal snapshot, then KO check, then timeout check. Single KO: surviving fighter wins. Double KO: compare stamina, else sudden death. Timeout: higher stamina wins; equal stamina compares health; equal both enters sudden death. Sudden death resets both to health 1, stamina 5,000, meter 0, neutral starting positions; first unilateral damaging hit wins. A trade repeats sudden death with new round segment ID; after three tied segments the round is drawn and replayed, no win awarded (A05). First to two wins; drawn rounds can extend total rounds beyond three. No random tie resolution.
 
-**Finisher conflict and proposed literal resolution (A06):** round winner and finisher performer are separate fields. Compare stamina from the frozen terminal snapshot; higher stamina performs the signature flourish even if that fighter lost by KO. Equal stamina: round winner performs; drawn rounds have no finisher. Presentation permits the nominally KO'd performer to stand for a comic, non-damaging flourish. This is awkward for a fighter; preferred alternative is winner-only finisher, but that changes the request and requires explicit approval. Never silently conflate the two rules. No simulation damage/rewards during the flourish. Freeze resources before audio/ad delays; a shared skip ends presentation only. Record both identities for replay and subtitles. Proposed maximum sequence 240 presentation ticks (4 seconds), skippable after 60; missing audio uses captions and animation, never blocks results.
+**Approved Phase 1 finisher rule:** the round winner always performs a non-damaging signature flourish. Terminal stamina still decides timeout before health/sudden death, but never selects a different performer. Freeze terminal resources before presentation. Drawn rounds have no finisher. A generated short sound and bilingual original catchphrase captions replace voice synthesis. Sequence lasts 180 presentation ticks and is skippable after 60; reduced motion removes the camera move without changing combat. These changes supersede A06.
+
 
 ## Player flow
 

@@ -31,7 +31,7 @@ validated immutable content → sim.step(state, inputs) → nextState + events
                               Three.js interpolation
 ```
 
-`packages/sim`: deterministic state, integer geometry, seeded PRNG, CPU decisions, replay serialization/hash, round outcomes. Cannot import DOM, React, Three.js, clocks, audio, network, platform storage or floating physics. `apps/client`: fixed-step scheduler, presentation, React routes/settings, WebAudio. `packages/content`: schema definitions and immutable versioned manifests. `packages/platform`: interfaces for storage, region/consent, sharing, audio lifecycle and later ads/auth. `apps/rooms`: later imports the same sim, authoritative match host. No code is created now.
+`packages/sim`: deterministic state, integer geometry, seeded PRNG, CPU decisions, replay serialization/hash, round outcomes. Cannot import DOM, React, Three.js, clocks, audio, network, platform storage or floating physics. `packages/client`: fixed-step scheduler, presentation, React routes/settings, WebAudio. `packages/content`: schema definitions and immutable versioned manifests. `packages/platform`: interfaces for storage, region/consent, sharing, audio lifecycle and later ads/auth. `apps/rooms`: later imports the same sim, authoritative match host. No code is created now.
 
 ## Determinism contract
 

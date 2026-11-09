@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+
+- Approved Phase 1 baseline: Fame Wars, 45-second rounds, winner finisher, 3-frame buffer, client/AI module separation and placeholder release.
+
 ## [0.0.0] — 2026-11-09
 
 - Added Phase 0 product, architecture, content, asset, voice, performance, networking, advertising, privacy and production definitions.

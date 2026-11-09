@@ -1,4 +1,4 @@
-# [GAME TITLE] — Phase 0
+# Fame Wars — Phase 0
 
 Version **v0.0.0**. Definition documents and empty future module directories only. No gameplay, runtime dependencies, executable app, network server or paid service has been created. Nothing has been published to GitHub or deployed.
 
@@ -25,7 +25,7 @@ Supporting records: [source/licence register](docs/12-sources-and-service-regist
 ## Planned layout
 
 ```text
-apps/client/       browser game and React menus (empty)
+packages/client/       browser game and React menus (empty)
 apps/rooms/        later Node/Colyseus host (empty)
 packages/sim/      deterministic combat, no renderer dependency (empty)
 packages/content/  later schemas, validation and manifests (empty)

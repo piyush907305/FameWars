@@ -60,10 +60,10 @@ All implementation numbers described as proposed budgets/rules are **design choi
 
 ## Questions that must be answered before Phase 1
 
-1. **Approval and title:** approve this Phase 0 baseline? What working title should replace `[GAME TITLE]`, or may it remain a placeholder? Approval is for Phase 1 only, not spending or launch.
+1. **Approval and title:** approve this Phase 0 baseline? What working title should replace `Fame Wars`, or may it remain a placeholder? Approval is for Phase 1 only, not spending or launch.
 2. **Audience:** accept provisional India-only **18+** audience, or must under-18s be included? Child-inclusive design must be revised before building consent/ad-facing flow.
 3. **Finisher conflict:** use literal higher-stamina performer even when that fighter loses by KO, or change to **round winner performs**? Confirm equal-stamina tiebreak (winner) and non-damaging flourish.
-4. **Round rules:** approve the proposed stamina/regen/stagger, 60-sec timer, double-KO and sudden-death rules, including drawn-round replay? Include dash?
+4. **Round rules:** approve the proposed stamina/regen/stagger, 45-sec timer, double-KO and sudden-death rules, including drawn-round replay? Include dash?
 5. **Local players:** is keyboard/two-gamepad local 2P plus touch-vs-CPU sufficient, or do you require two humans on one phone? Two separate phones is later online scope.
 6. **Roster and art:** approve Dynamo + Chalk, Duchess later, strictly original visuals/voices? Choose preferred look: stylised low-poly 3D or more detailed cartoon with benchmark gate; is owner-approved 2D-in-3D fallback acceptable if needed?
 7. **GitHub:** which account/organisation, repository name and visibility? Private recommended. What source licence policy should apply? No remote created/pushed until these are known; asset licences remain independent.
@@ -79,3 +79,7 @@ All implementation numbers described as proposed budgets/rules are **design choi
 14. Which scope/quality tradeoff wins if the 8 MB budget, high-detail art and zero budget conflict? Default proposal: reduce visual complexity, preserve combat and loading.
 
 **Stop gate:** no gameplay implementation, dependency installation, remote repository creation, paid service or deployment until explicit Phase 1 approval and answers to questions 1–8 (or recorded owner-approved deferrals). No answers or elapsed time do not imply approval.
+
+## Approved Phase 1 amendments
+
+User approved the conflict resolutions in [baseline amendment](18-phase1-approved-baseline.md). A06 is superseded: winner performs. A28: retain repository folder; A29: private hosted preview/local Git until remote specified; A30: physical devices/pads unavailable; A31: provisional adult self-declaration for private testing. These are ASSUMPTIONs; no spending or public launch authorized.

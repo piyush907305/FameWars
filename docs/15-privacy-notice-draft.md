@@ -10,7 +10,7 @@ Operator: **TBD**; privacy/grievance contact: **TBD**; address and effective dat
 
 ## Proposed plain-language notice structure
 
-**Who we are and who can play.** [GAME TITLE] is an original cartoon fighting game for the approved launch age group in India. Proposed age is 18+ (A01); not yet finalized. We use an age-band choice without storing full date of birth; this is not identity verification.
+**Who we are and who can play.** Fame Wars is an original cartoon fighting game for the approved launch age group in India. Proposed age is 18+ (A01); not yet finalized. We use an age-band choice without storing full date of birth; this is not identity verification.
 
 **What the local prototype uses.** Your controls, language, sound settings and optional locally stored preferences. There are no player recordings, voice uploads, celebrity imitation, accounts, online opponents, advertising or tracking SDKs in v0.1.0. A hosting provider may process network/security logs; list the chosen provider and actual retention before external hosting. “Local game” is not a claim that host logs never exist.
 

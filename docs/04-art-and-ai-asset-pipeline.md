@@ -6,7 +6,7 @@
 
 ## Visual direction
 
-Original stylised caricatures, exaggerated occupation and attitude, not identifiable people. Large readable head/hands, rounded forms, clean broad colour blocks, 2.5–3.5 heads tall as an art-direction proposal. No gore, realistic injury, celebrity faces, cloned costumes or photoreal face textures. Original arena: abstract rooftop studio with foam props and skyline shapes. References must be owned/licensed generic design studies; earlier Samay images/models must not enter this repository.
+Original stylised caricatures, exaggerated occupation and attitude, not identifiable people. Large readable head/hands, rounded forms, clean broad colour blocks, 2.5–3.5 heads tall as an art-direction proposal. No gore, realistic injury, celebrity faces, cloned costumes or photoreal face textures. Original arena: abstract Film City street with foam props and skyline shapes. References must be owned/licensed generic design studies; earlier Samay images/models must not enter this repository.
 
 Dynamo: wide triangular jacket silhouette; teal/coral/navy; oversized foam wrist guards. Chalk: compact square silhouette, purple training vest, yellow accents, chalkboard motif; no team kit/real batting stance. Duchess: tall bell silhouette, magenta/cyan/indigo, geometric cape panels, theatrical fan; no actual actor styling or religious clothing cues. Shared body collision prevents visual silhouette from dictating unfair reach.
 
