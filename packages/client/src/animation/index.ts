@@ -1,0 +1,2 @@
+import type {Actor} from '@fame/sim';
+export function pose(a:Actor,tick:number){const walk=a.state==='walk'?Math.sin(tick*.25)*.5:0;const strike=a.state==='attack'?Math.sin(Math.min(1,a.moveFrame/8)*Math.PI/2):0;return {walk,strike,crouch:a.state==='crouch'||a.state==='block'&&a.previousCrouch?-.4:0,lean:a.state==='hitstun'?-.25:a.state==='finisher'?.12:0,bob:a.state==='idle'?Math.sin(tick*.045)*.018:0};}
