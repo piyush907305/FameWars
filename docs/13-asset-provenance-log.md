@@ -34,3 +34,7 @@ Use one record per file, including derived exports. Source→derived chains must
 `model-dynamo-v1`: provider TBD, generatedAt null, licence pending, commercialUseAllowed pending, approvalStatus pending, disabledKey fighters.dhamaal-dynamo.enabled. This cannot pass a runtime build. Never prefill false certainty from the fighter's `original` label. Public examples in schemas use future IDs only.
 
 Review steps: open exact source terms → archive evidence/hash → verify input and output rights → compare actual export and identity review → record transformations → inspect attribution → approve or reject. Owner cannot approve assets with missing dates/unknown plan merely to meet a deadline. Licence review repeats on changed output/model/provider terms and before shipping.
+
+## Phase 1 actual placeholder assets — 2026-11-09
+
+Primitive geometry/canvas Film City sign: provider project-authored code, licence original project content (no public source grant selected), generated/exported at build, inputs only original fictional briefs, no real-person imitation; runtime no external model/texture files. Fighters carry per-record provider/licence/date/false-imitation data. Procedural oscillator tones: project-authored WebAudio code, no voice recordings, samples or external voice model. Third-party Three.js/React/Zod/tooling licences remain separate; pnpm-lock records exact resolved versions. Screen captures and benchmark evidence are from this prototype, not AI concept art. Owner publication/legal review pending; no polished/AI asset clearance implied.

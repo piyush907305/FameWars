@@ -1,42 +1,80 @@
-# Fame Wars — Phase 0
+# Fame Wars
 
-Version **v0.0.0**. Definition documents and empty future module directories only. No gameplay, runtime dependencies, executable app, network server or paid service has been created. Nothing has been published to GitHub or deployed.
+**Fight for the spotlight.** Browser 2.5D combat prototype, **v0.1.0**. Original fictional fighters, primitive art, generated sound effects. No real-person name, likeness or voice; no AI-generated assets, online play, accounts, ads or analytics.
 
-Start with [the one-page decision summary](docs/00-phase0-summary.md), [game brief](docs/01-game-brief.md), [architecture](docs/02-architecture.md), then [questions requiring approval](docs/11-risks-and-open-questions.md).
+## Run locally
 
-## Document index
+Use **Node 24.22.1** (`.nvmrc`) and **pnpm 11.25.0** (`packageManager`). Install that pnpm version using your normal Node/package-manager setup; do not disable signature checking to work around an outdated Corepack.
 
-1. [Brief and exact round rules](docs/01-game-brief.md)
-2. [Architecture and seven ADRs](docs/02-architecture.md)
-3. [Validated data contracts and examples](docs/03-data-schemas.md)
-4. [Art and AI assets](docs/04-art-and-ai-asset-pipeline.md)
-5. [Synthetic voices](docs/05-voice-pipeline.md)
-6. [Devices and performance](docs/06-device-and-performance-targets.md)
-7. [Networking](docs/07-networking-strategy.md)
-8. [Ads and revenue model](docs/08-monetisation-and-ads.md)
-9. [Legal, privacy, moderation and takedowns](docs/09-legal-and-content-policy.md)
-10. [Phased backlog](docs/10-backlog.md)
-11. [Risks, assumptions and approval questions](docs/11-risks-and-open-questions.md)
-
-Verification: [Phase 0 check record](docs/17-phase0-verification.md).
-
-Supporting records: [source/licence register](docs/12-sources-and-service-register.md), [provenance template](docs/13-asset-provenance-log.md), [release gates](docs/14-release-checklist.md), [privacy notice draft](docs/15-privacy-notice-draft.md), [terms draft](docs/16-terms-draft.md).
-
-## Planned layout
-
-```text
-packages/client/       browser game and React menus (empty)
-apps/rooms/        later Node/Colyseus host (empty)
-packages/sim/      deterministic combat, no renderer dependency (empty)
-packages/content/  later schemas, validation and manifests (empty)
-packages/platform/ web/native adapters (empty)
-assets/source/     future editable originals; large files via LFS
-assets/runtime/    future optimized exports
-tests/replays/    future deterministic fixtures (empty)
-docs/adr/          architecture decisions
-.github/           documentation CI and contribution templates
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Prior celebrity experiments are deliberately excluded. GitHub repository name, visibility and owner remain approval questions. Local Git initialization records no remote. Project source licence remains undecided: no open-source grant is implied; third-party rights remain separate.
+Open the printed Local URL, normally `http://localhost:5173/`. Rotate phones to landscape. First launch presents a bilingual original-content disclaimer and provisional 18+ self-declaration for private testing, not robust age verification/legal clearance. No third-party tracking SDK.
 
-Phase 1 will pin supported Node LTS and pnpm versions, create the package manifest/lockfile, and install approved dependencies. No install/start commands exist at Phase 0. To inspect now, open the Markdown files. CI currently checks document completeness and local links only; it does not claim gameplay checks.
+For a production build:
+
+```sh
+pnpm build
+pnpm preview
+```
+
+Open `http://localhost:4173/`. Static output is `dist/`; do not open index.html directly from disk. A matching private hosted preview uses the Sites configuration in `.openai/hosting.json`; GitHub target is https://github.com/piyush907305/FameWars (visibility approval pending). This is not a public production launch or approved Phase 2.
+
+## Play
+
+Select **Dhamaal Dynamo** (fictional action-star archetype) and **Captain Chalk** (fictional cricket-captain archetype). Mirror matches allowed. One original Film City street arena; first to two round wins; 45-second combat timer. Keyboard shared local two-player or one player vs easy/normal/hard CPU. Two connected pads can control local players; P1 touch controls appear on coarse-pointer devices. Two separate phones cannot play together yet.
+
+| Action | P1 | P2 default | Standard gamepad |
+|---|---|---|---|
+| Move | A / D | Left / Right | Left stick / D-pad |
+| Jump / crouch | W / S | Up / Down | A / Down |
+| Block | F | Numpad 0 | LB |
+| Light / heavy / kick | J / K / L | Numpad 1 / 2 / 3 | X / Y / B |
+| Dash / super | Left Shift / U | Numpad 4 / 5 | RB / RT |
+| Pause / debug | Escape / backtick | Shared | On-screen buttons |
+
+Remap keys under Settings (needed for keyboards without numpads); keyboard hardware rollover may limit simultaneous presses. Input sampled every 60 Hz sim tick; attacks edge-triggered with a 3-tick buffer, not hold-to-repeat. Stamina pays for attacks, block and dash; regenerate by standing idle. Zero stamina staggers. Standing block loses to low kick; crouch-block stops low/mid. Super needs full meter. Timeout compares stamina, then health, then sudden death. Round **winner** performs the non-damaging captioned flourish with a generated tone; skip after one second. Subtitles always on; reduced-motion/flash and volume controls available.
+
+## Verify
+
+```sh
+pnpm lint
+pnpm typecheck
+pnpm check:architecture
+pnpm test
+pnpm build
+pnpm exec playwright install chromium
+pnpm test:e2e
+```
+
+Local Playwright config defaults to installed Chrome; CI downloads Chromium. To use downloaded Chromium locally, run with `CI=1 pnpm test:e2e` after stopping an existing dev server (CI starts its own). No real data/accounts used in tests. On this workspace the standalone Chrome launch is sandbox-blocked; see [test report](docs/21-v0.1.0-test-report.md) for verified embedded-browser results and limits. Never call an unrun CI workflow green.
+
+Combat lab (dev server only): `/debug.html` for boxes; `/debug.html?art=3d` for 3D; append `&cpu=1` for normal CPU. The main game also accepts `?view=boxes`; toggle debug in-game with backtick or the debug button. [Checkpoint log](docs/19-checkpoints.md) records what works/doesn't and commands for all eight stages.
+
+## Architecture and content
+
+```text
+packages/content/  strict Zod schemas + fighter/move/arena/dialogue/balance JSON
+packages/sim/      pure step(state, inputs, content) → new state; serializable integer state
+packages/ai/       seeded difficulty policies → same Input interface
+packages/client/   input, render, animation, audio, ui modules
+scripts/           boundary check, sim demo/benchmark, explicit golden replay recording
+tests/browser/    Playwright match/menu/mobile acceptance scenarios
+tests/replays/    recorded commands + reviewed golden hash
+ docs/             design, approved amendments, reports, guides and evidence
+```
+
+The validated content is passed explicitly to sim instead of imported as mutable global data. Renderer consumes snapshots; audio/camera never decide hits. No sim clock, DOM, Three.js or Math.random. State transition table is in one place. The seeded PRNG is stored in state; CPU reads it. Resources and damage use integers; events have IDs. Hash is noncryptographic regression evidence, not security validation.
+
+- [Approved Phase 1 baseline / prior conflicts](docs/18-phase1-approved-baseline.md)
+- [Architecture and ADRs](docs/02-architecture.md)
+- [Add a fighter / tune a move](docs/20-content-authoring.md)
+- [Test report and limitations](docs/21-v0.1.0-test-report.md)
+- [Release notes and proposed Phase 2](docs/22-v0.1.0-release-notes.md)
+- [Legal/content and provenance policy](docs/09-legal-and-content-policy.md)
+
+## Git and ownership
+
+Small checkpoint commits are on named feature branches, integrated into main for release; v0.0.0 preserves Phase 0, v0.1.0 marks this prototype. Owner supplied https://github.com/piyush907305/FameWars. Access is verified; GitHub reports public visibility, so source publication is pending owner confirmation (A34). A Git bundle in the handoff preserves all commits/branches/tags and can be cloned normally. Sites' source store is separate from GitHub. The remote has an initial README commit; integration will preserve that history. No open-source licence is granted by default; original project code/content and third-party dependencies retain their respective rights. Exact dependency versions and lockfile committed; future updates deliberate.

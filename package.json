@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "engines": {
-    "node": ">=20.15.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -16,7 +16,10 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "format": "prettier --write packages tests *.ts *.json",
-    "sim": "tsx scripts/sim-demo.ts"
+    "sim": "node scripts/run-sim.mjs sim-demo",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "benchmark": "node scripts/run-sim.mjs sim-benchmark",
+    "record:replay": "node scripts/run-sim.mjs record-replay"
   },
   "dependencies": {
     "react": "19.1.10",
@@ -37,5 +40,6 @@
     "vite": "6.4.6",
     "vitest": "3.2.7",
     "tsx": "4.20.6"
-  }
+  },
+  "type": "module"
 }

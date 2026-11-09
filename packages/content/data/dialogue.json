@@ -1,0 +1,34 @@
+[
+  {
+    "id": "dynamo-finish",
+    "fighterId": "dynamo",
+    "trigger": "finisher",
+    "text": {
+      "en": "Cut! Now bring the snacks.",
+      "hi": "कट! अब नाश्ता लाओ।"
+    },
+    "audio": "procedural-tone",
+    "provenance": {
+      "provider": "project-authored-primitives",
+      "licence": "original",
+      "date": "2026-11-09",
+      "realPersonImitation": false
+    }
+  },
+  {
+    "id": "chalk-finish",
+    "fighterId": "chalk",
+    "trigger": "finisher",
+    "text": {
+      "en": "The scoreboard needs a tea break.",
+      "hi": "स्कोरबोर्ड को चाय की छुट्टी चाहिए।"
+    },
+    "audio": "procedural-tone",
+    "provenance": {
+      "provider": "project-authored-primitives",
+      "licence": "original",
+      "date": "2026-11-09",
+      "realPersonImitation": false
+    }
+  }
+]

@@ -17,11 +17,7 @@
       "h": 320
     },
     "knockback": 120,
-    "allowedStates": [
-      "idle",
-      "walk",
-      "crouch"
-    ]
+    "allowedStates": ["idle", "walk", "crouch"]
   },
   {
     "id": "heavy",
@@ -41,11 +37,7 @@
       "h": 450
     },
     "knockback": 220,
-    "allowedStates": [
-      "idle",
-      "walk",
-      "crouch"
-    ]
+    "allowedStates": ["idle", "walk", "crouch"]
   },
   {
     "id": "kick",
@@ -65,11 +57,7 @@
       "h": 300
     },
     "knockback": 180,
-    "allowedStates": [
-      "idle",
-      "walk",
-      "crouch"
-    ]
+    "allowedStates": ["idle", "walk", "crouch"]
   },
   {
     "id": "super",
@@ -89,10 +77,6 @@
       "h": 1100
     },
     "knockback": 400,
-    "allowedStates": [
-      "idle",
-      "walk",
-      "crouch"
-    ]
+    "allowedStates": ["idle", "walk", "crouch"]
   }
 ]

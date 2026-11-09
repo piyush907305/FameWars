@@ -1,6 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [0.1.0] — 2026-11-09
+
+- Checkpoint 8: 24 passing unit tests, strict checks, explicit workspace dependencies, data-defined dialogue/allowedStates fix, vendor chunking, input slot regression coverage, measured host frame/static-byte evidence and documented sandbox-blocked E2E.
 
 - Checkpoint 7: winner-only non-damaging flourish, camera change, original bilingual captions and generated-tone audio.
 

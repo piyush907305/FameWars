@@ -24,5 +24,9 @@
   "hitMeter": 60,
   "blockMeter": 30,
   "hitStopTicks": 4,
-  "suddenDeathTicks": 600
+  "suddenDeathTicks": 600,
+  "roundResultTicks": 90,
+  "suddenDeathHealth": 1,
+  "suddenDeathStamina": 5000,
+  "maxSuddenDeathDraws": 3
 }

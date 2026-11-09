@@ -1,5 +1,7 @@
 # Data contracts
 
+> Phase 1 changes approved by user: [authoritative amendment](18-phase1-approved-baseline.md). Historical Phase 0 proposals below are superseded where noted.
+
 **Status:** proposed Phase 0 specification, v0.0.0 • 2026-11-09 • Owner: project owner (sole producer). No approval or production readiness implied.
 
 **Content rule:** original fictional archetypes only; no real-person names, likenesses, imitations or voice clones. Every fighter requires `licenseStatus`, provenance and a remote disable key. Licensed additions cannot ship without written permission. See [content and privacy policy](09-legal-and-content-policy.md). All ASSUMPTION IDs resolve in [the register](11-risks-and-open-questions.md).

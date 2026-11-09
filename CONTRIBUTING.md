@@ -1,6 +1,6 @@
 # Contributing
 
-Phase 0 is documentation only. Phase 1 requires owner approval recorded in docs/11-risks-and-open-questions.md. Do not add gameplay before that approval.
+Phase 1 was approved by the owner; see docs/18-phase1-approved-baseline.md. v0.1.0 is the placeholder combat prototype. Do not start Phase 2, add paid services or publish a public production release without approval.
 
 Use short branches (`docs/round-rules`, `feat/input`), focused commits and PRs linked to an issue/milestone. Keep main releasable. Owner reviews even solo changes; record self-review when no second reviewer exists. Required checks/branch protection must actually be enabled in GitHub; the scaffold does not configure them.
 

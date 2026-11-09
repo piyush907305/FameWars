@@ -1,5 +1,7 @@
 # Backlog and milestones
 
+> Phase 1 changes approved by user: [authoritative amendment](18-phase1-approved-baseline.md). Historical Phase 0 proposals below are superseded where noted.
+
 **Status:** proposed Phase 0 specification, v0.0.0 • 2026-11-09 • Owner: project owner (sole producer). No approval or production readiness implied.
 
 **Content rule:** original fictional archetypes only; no real-person names, likenesses, imitations or voice clones. Every fighter requires `licenseStatus`, provenance and a remote disable key. Licensed additions cannot ship without written permission. See [content and privacy policy](09-legal-and-content-policy.md). All ASSUMPTION IDs resolve in [the register](11-risks-and-open-questions.md).
@@ -35,3 +37,7 @@ Android/iOS Capacitor distribution, native AdMob/consent integration, store fees
 ## Definition of done per release
 
 Linked issue and measurable acceptance; reproducible pinned build; code/content/sim/protocol versions; automated relevant checks and physical-device evidence; known limitations; commercial asset evidence; privacy/age/ads review; kill-switch test; changelog and owner approval; staging artifact and rollback pair. v0.0.0 is docs-only and has **no playable build**; subsequent phases must have the specified playable checkpoint. Never check off implementation based on a design document.
+
+## Phase 1 release supersession
+
+User approved shipping the complete placeholder prototype as v0.1.0 in Phase 1. Historical alpha/polished-art sequencing above is superseded by [approved baseline](18-phase1-approved-baseline.md). Checkpoint evidence: [Phase 1 log](19-checkpoints.md); Phase 2 recommendation: [release notes](22-v0.1.0-release-notes.md). Do not start Phase 2 without approval.

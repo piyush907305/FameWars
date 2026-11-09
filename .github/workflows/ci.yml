@@ -1,40 +1,34 @@
-name: Phase 0 documentation
-on:
-  push:
-  pull_request:
+name: Fame Wars verification
+on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  docs:
+  verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, pinned
         with:
           persist-credentials: false
-      - name: Check required documents and relative file links
-        shell: python
-        run: |
-          from pathlib import Path
-          import re
-          root = Path('.')
-          required = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md']
-          required += [f'docs/{n}' for n in [
-            '01-game-brief.md', '02-architecture.md', '03-data-schemas.md',
-            '04-art-and-ai-asset-pipeline.md', '05-voice-pipeline.md',
-            '06-device-and-performance-targets.md', '07-networking-strategy.md',
-            '08-monetisation-and-ads.md', '09-legal-and-content-policy.md',
-            '10-backlog.md', '11-risks-and-open-questions.md']]
-          errors = [f'Missing: {p}' for p in required if not (root / p).is_file()]
-          for p in root.rglob('*.md'):
-            if '.git' in p.parts:
-              continue
-            for target in re.findall(r'(?<!!)\[[^\]]*\]\(([^)]+)\)', p.read_text()):
-              if '://' in target or target.startswith(('mailto:', '#')):
-                continue
-              target = target.split('#', 1)[0]
-              if target and not (p.parent / target).exists():
-                errors.append(f'{p}: missing link {target}')
-          assert not errors, '\n'.join(errors)
-      # Phase 1: pin third-party action SHAs and Node/pnpm; install --frozen-lockfile;
-      # lint, typecheck, content validation, sim tests, Playwright and bundle budgets.
-      # No package, server, deployment credentials or gameplay checks exist yet.
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4, pinned
+        with:
+          node-version: '24.22.1'
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4, pinned
+        with:
+          version: '11.25.0'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm check:architecture
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4, pinned
+        if: always()
+        with:
+          name: prototype-evidence
+          path: |
+            test-results/
+            docs/evidence/
+            dist/

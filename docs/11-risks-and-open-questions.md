@@ -83,3 +83,11 @@ All implementation numbers described as proposed budgets/rules are **design choi
 ## Approved Phase 1 amendments
 
 User approved the conflict resolutions in [baseline amendment](18-phase1-approved-baseline.md). A06 is superseded: winner performs. A28: retain repository folder; A29: private hosted preview/local Git until remote specified; A30: physical devices/pads unavailable; A31: provisional adult self-declaration for private testing. These are ASSUMPTIONs; no spending or public launch authorized.
+
+ASSUMPTION A32: data-controlled 4-tick hit stop freezes combat/timer during a hit; it does not consume extra stamina. This is a proposed feel parameter, not wall-clock-dependent sim logic. ASSUMPTION A33: four-digit build/timer/readout language labels and gamepad button names may retain conventional English abbreviations; full copy/native proofreading remains Phase 2.
+
+ASSUMPTION A34: GitHub account supplied by owner is piyush907305; infer private repository name fame-wars unless corrected. Remote creation/push requires an actual authenticated connection; plugin suggested, connection not yet confirmed.
+
+A34 update: GitHub connection verified as piyush907305. Native connector lacks repository creation; separate browser is signed out. Owner asked to create/access-grant empty private fame-wars and provide URL. No remote created or pushed yet.
+
+A34 update: Owner provided https://github.com/piyush907305/FameWars; access verified. It has an initial README commit and public visibility. Publication awaits explicit public approval or a change to private.

@@ -31,7 +31,7 @@ validated immutable content → sim.step(state, inputs) → nextState + events
                               Three.js interpolation
 ```
 
-`packages/sim`: deterministic state, integer geometry, seeded PRNG, CPU decisions, replay serialization/hash, round outcomes. Cannot import DOM, React, Three.js, clocks, audio, network, platform storage or floating physics. `packages/client`: fixed-step scheduler, presentation, React routes/settings, WebAudio. `packages/content`: schema definitions and immutable versioned manifests. `packages/platform`: interfaces for storage, region/consent, sharing, audio lifecycle and later ads/auth. `apps/rooms`: later imports the same sim, authoritative match host. No code is created now.
+`packages/sim`: deterministic state, integer geometry, seeded PRNG state, replay serialization/hash, round outcomes. Cannot import DOM, React, Three.js, clocks, audio, network, platform storage or floating physics. `packages/client`: fixed-step scheduler, presentation, React routes/settings, WebAudio. `packages/content`: schema definitions and immutable versioned manifests. `packages/platform`: interfaces for storage, region/consent, sharing, audio lifecycle and later ads/auth. `apps/rooms`: later imports the same sim, authoritative match host. No code is created now.
 
 ## Determinism contract
 
@@ -62,3 +62,7 @@ Deploy immutable client build + asset manifest + compatible sim/content versions
 - [0005 Content schemas](adr/0005-content-schemas.md)
 - [0006 State management](adr/0006-state-management.md)
 - [0007 Wrapper strategy](adr/0007-app-wrapper-strategy.md)
+
+## Phase 1 implementation notes
+
+See [approved amendment](18-phase1-approved-baseline.md). `packages/ai` consumes a MatchState and emits the same Input as humans; sim never imports AI or rendering. `packages/client/src` contains input, render, animation, audio and ui modules. Schema code and JSON live in packages/content. The private v0.1.0 placeholder prototype has no accounts/telemetry/ad calls; future public content revocation/privacy gates remain pending. Tests currently demonstrate Node replay determinism, not cross-engine rollback correctness. No general physics engine. Node 24.22.1 and pnpm 11.25.0 pinned for this checkout.
