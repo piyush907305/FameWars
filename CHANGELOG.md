@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Checkpoint 4: verified all move/resource/round rules including simultaneous trades, timeout priority, super cost, three-frame buffer and best-of-three.
+
 - Checkpoint 3: primitive fictional fighters, merged static Film City geometry and interpolated side-view camera.
 
 - Checkpoint 2: keyboard-driven combat lab, wireframe hitboxes/hurtboxes and sim state readout.
