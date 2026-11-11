@@ -415,93 +415,346 @@ function App() {
                       {selected[1] === f.id ? 'P2' : ''}
                     </span>
                   </div>
-                  <div className…5146 tokens truncated…is.observer = new ResizeObserver(() => this.resize());
-    this.observer.observe(canvas);
-    this.resize();
-  }
-  setFighters(ids: [string, string]) {
-    this.puppets.forEach((p) => {
-      this.scene.remove(p.group);
-      p.group.traverse((o) => {
-        if (o instanceof THREE.Mesh)
-          for (const m of Array.isArray(o.material) ? o.material : [o.material]) m.dispose();
-      });
-    });
-    this.puppets = ids.map((id) => fighter(content.fighters.find((f) => f.id === id)!)) as [
-      Puppet,
-      Puppet,
-    ];
-    this.puppets.forEach((p) => this.scene.add(p.group));
-  }
-  private resize() {
-    const w = this.canvas.clientWidth,
-      h = this.canvas.clientHeight;
-    if (w && h) {
-      this.engine.setSize(w, h, false);
-      this.camera.aspect = w / h;
-      this.camera.updateProjectionMatrix();
-    }
-  }
-  draw(s: MatchState, previous: MatchState, alpha: number) {
-    const winner = s.winner === null ? null : s.actors[s.winner];
-    const finish = s.phase === 'finisher' && !this.reduced;
-    this.camera.position.set(
-      finish && winner ? (winner.x / 1000) * 0.4 : 0,
-      finish ? 2.7 : 3.6,
-      finish ? 6.5 : Math.max(9.8, 8.5 / this.camera.aspect),
-    );
-    this.camera.lookAt(finish && winner ? (winner.x / 1000) * 0.7 : 0, 1.0, 0);
-    this.puppets.forEach((p, i) => {
-      const a = s.actors[i]!,
-        old = previous.actors[i]!;
-      p.group.position.set(
-        (old.x + (a.x - old.x) * alpha) / 1000,
-        (old.y + (a.y - old.y) * alpha) / 1000,
-        0,
-      );
-      p.group.rotation.y = a.facing === 1 ? 0.3 : -0.3;
-      p.group.visible = true;
-      const poseData = pose(a, s.tick);
-      p.body.position.y = poseData.crouch + (this.reduced ? 0 : poseData.bob);
-      p.body.rotation.z = poseData.lean * a.facing;
-      p.group.rotation.z = a.state === 'KO' ? -a.facing * 1.35 : 0;
-      p.leftLeg.rotation.x = poseData.walk;
-      p.rightLeg.rotation.x = -poseData.walk;
-      p.leftArm.rotation.z = 0.18;
-      p.rightArm.rotation.z = -0.18;
-      const arm = a.facing === 1 ? p.rightArm : p.leftArm;
-      arm.rotation.z =
-        -a.facing *
-        (a.state === 'block' ? 1.8 : a.state === 'finisher' ? 2.7 : poseData.strike * 1.6 + 0.18);
-      if (a.move === 'kick')
-        (a.facing === 1 ? p.rightLeg : p.leftLeg).rotation.z = -a.facing * poseData.strike * 1.3;
-      p.body.visible = this.style === '3d';
-      const hb = hurtbox(a, content),
-        ab = attackbox(a, content);
-      [hb, ab].forEach((b, k) => {
-        const mesh = this.debugMeshes[i * 2 + k]!;
-        mesh.visible = !!b && (this.debug || this.style === 'boxes');
-        if (b) {
-          mesh.position.set((b.x + b.w / 2) / 1000, (b.y + b.h / 2) / 1000, 0.4);
-          mesh.scale.set(b.w / 1000, b.h / 1000, 1);
-        }
-      });
-    });
-    this.engine.render(this.scene, this.camera);
-    this.drawCalls = this.engine.info.render.calls;
-    this.triangles = this.engine.info.render.triangles;
-  }
-  destroy() {
-    this.observer.disconnect();
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh) {
-        o.geometry.dispose();
-        for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
-          if ('map' in m) (m as THREE.MeshBasicMaterial).map?.dispose();
-          m.dispose();
-        }
-      }
-    });
-    this.engine.dispose();
-  }
+                  <div className={`portrait ${f.visual.prop}`}>
+                    <div className="portrait-head">
+                      <i />
+                      <b />
+                    </div>
+                    <div className="portrait-body" />
+                  </div>
+                  <div className="card-info">
+                    <small>{f.archetype.replace('-', ' ').toUpperCase()}</small>
+                    <h2>{f.name[lang]}</h2>
+                    <span>{lineFor(f.id, lang)}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="match-setup panel">
+              <span className="eyebrow">SET THE SCENE</span>
+              <div className="slot-tabs">
+                {([0, 1] as const).map((i) => (
+                  <button className={slot === i ? 'active' : ''} onClick={() => setSlot(i)} key={i}>
+                    P{i + 1} · {content.fighters.find((f) => f.id === selected[i])!.name[lang]}
+                  </button>
+                ))}
+              </div>
+              <label>
+                {lang === 'en' ? 'Match mode' : 'मुकाबले का मोड'}
+                <select
+                  aria-label="Match mode"
+                  value={mode}
+                  onChange={(e) => setMode(e.target.value as typeof mode)}
+                >
+                  <option value="cpu">{t.cpu}</option>
+                  <option value="local">{t.local}</option>
+                </select>
+              </label>
+              {mode === 'cpu' && (
+                <label>
+                  {t.difficulty}
+                  <select
+                    aria-label="CPU difficulty"
+                    value={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value as Difficulty)}
+                  >
+                    {(['easy', 'normal', 'hard'] as const).map((d) => (
+                      <option key={d} value={d}>
+                        {t[d]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              )}
+              <div className="arena-label">
+                <span>LOCATION 01</span>
+                <strong>{content.arena.name[lang]}</strong>
+              </div>
+              <button className="primary" onClick={start}>
+                {t.start}
+                <span>→</span>
+              </button>
+              <small>
+                {lang === 'en'
+                  ? 'Local 2P: shared keyboard or two gamepads. Touch: player 1.'
+                  : 'लोकल 2P: कीबोर्ड या दो गेमपैड। टच: खिलाड़ी 1।'}
+              </small>
+              <button className="text-button" onClick={goTitle}>
+                ← {t.back}
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+      {screen === 'fight' && (
+        <>
+          <section className="hud">
+            {snapshot.actors.map((a, i) => {
+              const def = content.fighters.find((f) => f.id === a.id)!;
+              return (
+                <div key={i} className={`fighter-hud player-${i}`}>
+                  <div className="hud-name">
+                    <span>
+                      P{i + 1} {mode === 'cpu' && i === 1 ? '· CPU' : ''}
+                    </span>
+                    <strong>{def.name[lang]}</strong>
+                    <div className="pips">
+                      {[0, 1].map((n) => (
+                        <i key={n} className={snapshot.wins[i]! > n ? 'filled' : ''} />
+                      ))}
+                    </div>
+                  </div>
+                  <div
+                    className="healthbar"
+                    role="meter"
+                    aria-label={`P${i + 1} health`}
+                    aria-valuenow={a.health}
+                    aria-valuemin={0}
+                    aria-valuemax={1000}
+                  >
+                    <div style={{ width: `${a.health / 10}%` }} />
+                  </div>
+                  <div className="sub-bars">
+                    <label>
+                      {t.stamina}
+                      <div className="bar stamina">
+                        <i style={{ width: `${a.stamina / 100}%` }} />
+                      </div>
+                    </label>
+                    <label>
+                      {t.meter}
+                      <div className={`bar meter ${a.meter === 1000 ? 'ready' : ''}`}>
+                        <i style={{ width: `${a.meter / 10}%` }} />
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              );
+            })}
+            <div className="timer">
+              <small>
+                {t.round} {snapshot.round}
+              </small>
+              <strong>
+                {Math.max(0, Math.ceil(snapshot.remaining / 60))
+                  .toString()
+                  .padStart(2, '0')}
+              </strong>
+              <span>BEST OF 3</span>
+            </div>
+          </section>
+          <div className="fight-tools">
+            <button
+              aria-label={t.pause}
+              onClick={() => {
+                setPaused(true);
+                runtime.current?.input.clear();
+              }}
+            >
+              Ⅱ
+            </button>
+            <button aria-label="Debug overlay" onClick={() => setDebug((x) => !x)}>
+              ⌘
+            </button>
+          </div>
+          <div className="arena-caption">
+            FILM CITY <span>BACKLOT 07</span>
+          </div>
+          {snapshot.suddenDeath && snapshot.phase === 'fight' && (
+            <div className="sudden">{t.sudden}</div>
+          )}
+          {snapshot.phase === 'finisher' && snapshot.winner !== null && (
+            <section className="finisher-caption" aria-live="polite">
+              <small>
+                {
+                  content.fighters.find((f) => f.id === snapshot.actors[snapshot.winner!].id)!.name[
+                    lang
+                  ]
+                }{' '}
+                · SPOTLIGHT MOMENT
+              </small>
+              <h2>“{lineFor(snapshot.actors[snapshot.winner!].id, lang)}”</h2>
+              <button
+                onClick={() => {
+                  if (runtime.current) runtime.current.skip = true;
+                }}
+              >
+                {t.skip} →
+              </button>
+            </section>
+          )}
+          {snapshot.phase === 'roundResult' && (
+            <div className="round-result">
+              {snapshot.winner === null ? t.draw : `P${snapshot.winner + 1} · ${t.win}`}
+            </div>
+          )}
+          <div className="keyboard-hint">
+            A D / W S · F block · J light · K heavy · L kick · Shift dash · U super{' '}
+            <span>` DEBUG · ESC PAUSE</span>
+          </div>
+          <section className="touch-controls" role="region" aria-label="Touch controls">
+            <div className="movement">
+              {touchButton('jump', '↑')}
+              {touchButton('left', '←')}
+              {touchButton('crouch', '↓')}
+              {touchButton('right', '→')}
+            </div>
+            <div className="actions">
+              {touchButton('block', 'BLOCK')}
+              {touchButton('dash', 'DASH')}
+              {touchButton('light', 'LIGHT')}
+              {touchButton('heavy', 'HEAVY')}
+              {touchButton('kick', 'KICK')}
+              {touchButton('super', 'SUPER', 'super-button')}
+            </div>
+          </section>
+        </>
+      )}
+      {screen === 'result' && (
+        <section className="overlay result-screen">
+          <div className="panel">
+            <span className="eyebrow">
+              FINAL TAKE · {snapshot.wins[0]} : {snapshot.wins[1]}
+            </span>
+            <h1>{t.results}</h1>
+            <div className="result-star">✦</div>
+            <h2>
+              {
+                content.fighters.find((f) => f.id === snapshot.actors[snapshot.winner ?? 0].id)!
+                  .name[lang]
+              }
+            </h2>
+            <p>{t.win}</p>
+            <button className="primary" onClick={start}>
+              {t.rematch} ↗
+            </button>
+            <button className="text-button" onClick={goTitle}>
+              {t.menu}
+            </button>
+          </div>
+        </section>
+      )}
+      {paused && screen === 'fight' && !settings && (
+        <section className="overlay pause-screen">
+          <div className="panel">
+            <span className="eyebrow">HOLD THE CAMERA</span>
+            <h1>{t.pause}</h1>
+            <button
+              className="primary"
+              onClick={() => {
+                runtime.current?.input.clear();
+                setPaused(false);
+              }}
+            >
+              {t.resume} →
+            </button>
+            <button className="secondary" onClick={() => setSettings(true)}>
+              {t.settings}
+            </button>
+            <button
+              className="text-button"
+              onClick={() => {
+                setPaused(false);
+                setScreen('title');
+              }}
+            >
+              {t.menu}
+            </button>
+          </div>
+        </section>
+      )}
+      {settings && (
+        <section className="overlay settings-screen">
+          <div className="panel settings-panel">
+            <div className="panel-heading">
+              <h1>{t.settings}</h1>
+              <button
+                className="icon-button"
+                aria-label="Close settings"
+                onClick={() => {
+                  setSettings(false);
+                  setRemapping(null);
+                }}
+              >
+                ×
+              </button>
+            </div>
+            <label>
+              {t.volume}
+              <input
+                aria-label="Volume"
+                type="range"
+                min="0"
+                max="1"
+                step=".05"
+                value={volume}
+                onChange={(e) => {
+                  setVolume(Number(e.target.value));
+                  store('fame.volume', e.target.value);
+                  runtime.current?.audio.unlock();
+                }}
+              />
+            </label>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={reduced}
+                onChange={(e) => {
+                  setReduced(e.target.checked);
+                  store('fame.reduced', e.target.checked ? '1' : '0');
+                }}
+              />
+              {t.motion}
+            </label>
+            <p className="setting-note">
+              {t.subtitles} · Gamepad: A jump / X light / Y heavy / B kick / LB block / RB dash / RT
+              super.
+            </p>
+            <h2>{t.controls}</h2>
+            <div className="bindings" key={bindingRevision}>
+              {([0, 1] as const).map((player) => (
+                <div key={player}>
+                  <h3>P{player + 1}</h3>
+                  {actionNames.map((a) => (
+                    <button key={a} onClick={() => setRemapping({ slot: player, action: a })}>
+                      <span>{a}</span>
+                      <kbd>
+                        {remapping?.slot === player && remapping.action === a
+                          ? t.press
+                          : (runtime.current?.input.bindings[player][a] ?? defaults[player][a])
+                              ?.replace('Key', '')
+                              .replace('Arrow', '')}
+                      </kbd>
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <button
+              className="secondary"
+              onClick={() => {
+                if (runtime.current) runtime.current.input.bindings = structuredClone(defaults);
+                store('fame.bindings', JSON.stringify(defaults));
+                setBindingRevision((x) => x + 1);
+              }}
+            >
+              {t.reset}
+            </button>
+          </div>
+        </section>
+      )}
+      {debug && (
+        <pre className="debug-overlay">{`SIM 60 Hz · FRAME ${snapshot.tick}
+FPS ${fps} · ${draws} draws
+${snapshot.phase} · seed ${snapshot.rng}
+${snapshot.actors.map((a) => `${a.id}: ${a.state} ${a.move ?? ''} ${a.moveFrame} · x=${a.x} y=${a.y}`).join('\n')}`}</pre>
+      )}
+      <div className="rotate-prompt">
+        <span>↻</span>
+        <h2>{t.rot}</h2>
+        <p>{t.rotbody}</p>
+      </div>
+    </main>
+  );
 }
+createRoot(document.getElementById('root')!).render(<App />);

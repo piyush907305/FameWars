@@ -78,3 +78,7 @@ The validated content is passed explicitly to sim instead of imported as mutable
 ## Git and ownership
 
 Small checkpoint commits are on named feature branches, integrated into main for release; v0.0.0 preserves Phase 0, v0.1.0 marks this prototype. Owner supplied https://github.com/piyush907305/FameWars. Access is verified and public source publication was approved by the owner (A34). A Git bundle in the handoff preserves all commits/branches/tags and can be cloned normally. Sites' source store is separate from GitHub. The remote has an initial README commit; integration will preserve that history. No open-source licence is granted by default; original project code/content and third-party dependencies retain their respective rights. Exact dependency versions and lockfile committed; future updates deliberate.
+
+## Publication status
+
+Public GitHub source publication is authorized, but upload is blocked by missing Git credentials and connector write access (403). The owner-private hosted preview is not deployed because execution approval rejected the supported credential-transfer step. See the test report for exact limitations. The source ZIP and Git bundle provide the complete local handoff; Phase 1 external acceptance is pending.
