@@ -313,7 +313,7 @@ function App() {
             <p>{t.disclaimer}</p>
             <p lang={lang === 'en' ? 'hi' : 'en'}>{t.disclaimerhi}</p>
             <small>
-              Private combat prototype · no accounts, ads or analytics. / निजी प्रोटोटाइप · कोई
+              Combat prototype · no accounts, ads or analytics. / कॉम्बैट प्रोटोटाइप · कोई
               विज्ञापन या ट्रैकिंग नहीं।
             </small>
             <label className="check">

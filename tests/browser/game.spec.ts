@@ -13,7 +13,7 @@ async function match(page: Page) {
   await page.getByRole('button', { name: /Roll camera/ }).click();
   await expect(page.locator('.hud')).toBeVisible();
 }
-test('boots, validates disclaimer, picks fighters and completes a best-of-three through real inputs', async ({
+test('@full-match boots, validates disclaimer, picks fighters and completes a best-of-three through real inputs', async ({
   page,
 }) => {
   // Software-rendered CI must render every virtual clock frame through two rounds.

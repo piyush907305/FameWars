@@ -12,3 +12,6 @@ assets/source/private/
 
 .cache/
 .sites-runtime/
+
+# Also ignore a local dependency symlink used for portable verification.
+node_modules

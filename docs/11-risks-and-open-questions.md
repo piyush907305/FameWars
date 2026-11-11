@@ -93,3 +93,12 @@ A34 update: GitHub connection verified as piyush907305. Native connector lacks r
 A34 update: Owner provided https://github.com/piyush907305/FameWars; access verified. It has an initial README commit and public visibility. Publication awaits explicit public approval or a change to private.
 
 A34 resolved: owner explicitly approved public source publication to https://github.com/piyush907305/FameWars. Hosted preview remains owner-private.
+
+## Phase 1.5 amendments
+
+User explicitly requested a public prototype, PR review/merge, real history preservation, tags and a faster PR test split. Earlier private-preview-only descriptions are superseded for the prototype; production monetisation/legal launch remains out of scope.
+
+ASSUMPTION A35: GitHub Pages is the zero-cost static-hosting fallback after the Sites helper credential transfer remains denied. No new backend, paid account, ads or analytics.
+ASSUMPTION A36: nightly full-match run at 19:30 UTC (01:00 IST next day) is suitable; GitHub schedules may be delayed. Manual dispatch is available.
+ASSUMPTION A37: physical Android hardware and USB access must be supplied/confirmed by the owner; existing document 06 devices remain provisional targets. No device measurements are inferred from emulation.
+ASSUMPTION A38: original v0.1.0 tag is preserved at ba03c3513b1f685cc82ca4a90d11dc1611c6f020; readiness changes do not rewrite that tag. Main integrates their commits separately.

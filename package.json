@@ -19,7 +19,11 @@
     "sim": "node scripts/run-sim.mjs sim-demo",
     "check:architecture": "node scripts/check-architecture.mjs",
     "benchmark": "node scripts/run-sim.mjs sim-benchmark",
-    "record:replay": "node scripts/run-sim.mjs record-replay"
+    "record:replay": "node scripts/run-sim.mjs record-replay",
+    "test:replay": "vitest run packages/sim/src/replay.test.ts",
+    "test:e2e:smoke": "playwright test --grep-invert @full-match",
+    "test:e2e:full": "playwright test --grep @full-match",
+    "record:replay:10000": "node scripts/run-sim.mjs record-replay-10000"
   },
   "dependencies": {
     "react": "19.1.10",

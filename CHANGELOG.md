@@ -1,5 +1,14 @@
 # Changelog
 
+## Phase 1.5 — release readiness
+
+- Added a recorded 10,000-tick headless replay and JSON snapshot/resume golden-hash check.
+- Kept browser smoke tests on PRs; full rendered match runs nightly/manually.
+- Added static GitHub Pages deployment and a checksum-verified one-time original-history preservation job.
+- Added review notes, a physical Android test protocol, and a Phase 2 asset gate.
+- Physical phone results remain pending; no phone FPS or game-feel claims are made.
+
+
 ## [0.1.0] — 2026-11-09
 
 - Checkpoint 8: 24 passing unit tests, strict checks, explicit workspace dependencies, data-defined dialogue/allowedStates fix, vendor chunking, input slot regression coverage, measured host frame/static-byte evidence and documented sandbox-blocked E2E.

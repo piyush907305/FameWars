@@ -82,3 +82,9 @@ Small checkpoint commits are on named feature branches, integrated into main for
 ## Publication status
 
 Public GitHub source publication is authorized, but upload is blocked by missing Git credentials and connector write access (403). The owner-private hosted preview is not deployed because execution approval rejected the supported credential-transfer step. See the test report for exact limitations. The source ZIP and Git bundle provide the complete local handoff; Phase 1 external acceptance is pending.
+
+## Phase 1.5 readiness
+
+See [readiness review and phone protocol](docs/23-phase1-5-readiness.md). `pnpm test:replay` checks a recorded 10,000-tick golden replay without a renderer; `pnpm test:e2e:smoke` runs the two short UI checks. `pnpm test:e2e:full` runs the complete rendered match; CI runs that nightly/manually rather than on every PR. `pnpm test:e2e` still runs everything locally on demand.
+
+Public preview deployment uses GitHub Pages after main is merged. The original private Sites registration remains unpublished; no credentials are checked into the project. Physical budget/mid-range Android results are a release gate before Phase 2 asset work.
