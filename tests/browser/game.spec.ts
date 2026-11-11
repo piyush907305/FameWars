@@ -16,6 +16,8 @@ async function match(page: Page) {
 test('boots, validates disclaimer, picks fighters and completes a best-of-three through real inputs', async ({
   page,
 }) => {
+  // Software-rendered CI must render every virtual clock frame through two rounds.
+  test.setTimeout(600_000);
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.clock.install();
