@@ -1,0 +1,18 @@
+{
+  "id": "film-city-street",
+  "name": {
+    "en": "Film City · Backlot 07",
+    "hi": "फ़िल्म सिटी · बैकलॉट 07"
+  },
+  "minX": -4000,
+  "maxX": 4000,
+  "spawns": [-1550, 1550],
+  "ground": 0,
+  "palette": ["#0b1827", "#3b294d", "#f6b857"],
+  "provenance": {
+    "provider": "project-authored-primitives",
+    "licence": "original",
+    "date": "2026-11-09",
+    "realPersonImitation": false
+  }
+}
