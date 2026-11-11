@@ -1,0 +1,16 @@
+{
+  "averageFps": 59.99977653714511,
+  "debug": "SIM 60 Hz · FRAME 1654\nFPS 60 · 53 draws\nmatchResult · seed 2933073954\ndynamo: KO  0 · x=-3510 y=0\nchalk: win  15 · x=-2575 y=0",
+  "drawCalls": 53,
+  "maxFrameMs": 17.700000000004366,
+  "p95FrameMs": 17.599999999998545,
+  "phase": "matchResult",
+  "samples": 1611,
+  "source": "production localhost:4173 in-app browser, host desktop; not phone emulation",
+  "triangles": 6218,
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  },
+  "windowMs": 26850.1
+}

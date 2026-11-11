@@ -1,0 +1,56 @@
+[
+  {
+    "id": "dynamo",
+    "name": {
+      "en": "Dhamaal Dynamo",
+      "hi": "धमाल डायनेमो"
+    },
+    "archetype": "action-star",
+    "licenseStatus": "original",
+    "killSwitchKey": "fighters.dynamo.enabled",
+    "palette": ["#2ee6b8", "#203344", "#ffb75c"],
+    "body": {
+      "radius": 260,
+      "height": 1800
+    },
+    "moves": ["light", "heavy", "kick", "super"],
+    "visual": {
+      "style": "primitive",
+      "prop": "star"
+    },
+    "provenance": {
+      "provider": "project-authored-primitives",
+      "licence": "original",
+      "date": "2026-11-09",
+      "realPersonImitation": false
+    },
+    "dialogueIds": ["dynamo-finish"]
+  },
+  {
+    "id": "chalk",
+    "name": {
+      "en": "Captain Chalk",
+      "hi": "कैप्टन चॉक"
+    },
+    "archetype": "cricket-captain",
+    "licenseStatus": "original",
+    "killSwitchKey": "fighters.chalk.enabled",
+    "palette": ["#a794ff", "#302c52", "#ffd35a"],
+    "body": {
+      "radius": 260,
+      "height": 1800
+    },
+    "moves": ["light", "heavy", "kick", "super"],
+    "visual": {
+      "style": "primitive",
+      "prop": "captain"
+    },
+    "provenance": {
+      "provider": "project-authored-primitives",
+      "licence": "original",
+      "date": "2026-11-09",
+      "realPersonImitation": false
+    },
+    "dialogueIds": ["chalk-finish"]
+  }
+]

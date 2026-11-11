@@ -1,0 +1,33 @@
+{
+  "files": [
+    {
+      "path": "dist/index.html",
+      "bytes": 795,
+      "gzipBytes": 413
+    },
+    {
+      "path": "dist/assets/index-AzC8vfyt.js",
+      "bytes": 98560,
+      "gzipBytes": 28259
+    },
+    {
+      "path": "dist/assets/index-8jeH-1gB.css",
+      "bytes": 15674,
+      "gzipBytes": 4285
+    },
+    {
+      "path": "dist/assets/react-Dc3cV3Oa.js",
+      "bytes": 186501,
+      "gzipBytes": 58327
+    },
+    {
+      "path": "dist/assets/three-lL_5tcvE.js",
+      "bytes": 527521,
+      "gzipBytes": 129825
+    }
+  ],
+  "totalRawBytes": 829051,
+  "totalGzipBytes": 221109,
+  "limitBytes": 8000000,
+  "method": "Entire static asset set, conservative uncompressed size and local gzip calculation; not a HAR or 4G timing measurement."
+}

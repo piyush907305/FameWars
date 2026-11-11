@@ -1,0 +1,82 @@
+[
+  {
+    "id": "light",
+    "startup": 6,
+    "active": 3,
+    "recovery": 12,
+    "damage": 60,
+    "staminaCost": 600,
+    "meterCost": 0,
+    "hitstun": 14,
+    "blockstun": 8,
+    "hitLevel": "mid",
+    "hitbox": {
+      "x": 180,
+      "y": 850,
+      "w": 520,
+      "h": 320
+    },
+    "knockback": 120,
+    "allowedStates": ["idle", "walk", "crouch"]
+  },
+  {
+    "id": "heavy",
+    "startup": 15,
+    "active": 4,
+    "recovery": 24,
+    "damage": 140,
+    "staminaCost": 1500,
+    "meterCost": 0,
+    "hitstun": 26,
+    "blockstun": 15,
+    "hitLevel": "mid",
+    "hitbox": {
+      "x": 200,
+      "y": 750,
+      "w": 680,
+      "h": 450
+    },
+    "knockback": 220,
+    "allowedStates": ["idle", "walk", "crouch"]
+  },
+  {
+    "id": "kick",
+    "startup": 11,
+    "active": 4,
+    "recovery": 18,
+    "damage": 90,
+    "staminaCost": 1000,
+    "meterCost": 0,
+    "hitstun": 20,
+    "blockstun": 11,
+    "hitLevel": "low",
+    "hitbox": {
+      "x": 160,
+      "y": 120,
+      "w": 800,
+      "h": 300
+    },
+    "knockback": 180,
+    "allowedStates": ["idle", "walk", "crouch"]
+  },
+  {
+    "id": "super",
+    "startup": 24,
+    "active": 6,
+    "recovery": 36,
+    "damage": 240,
+    "staminaCost": 2400,
+    "meterCost": 1000,
+    "hitstun": 40,
+    "blockstun": 20,
+    "hitLevel": "mid",
+    "hitbox": {
+      "x": 100,
+      "y": 300,
+      "w": 1200,
+      "h": 1100
+    },
+    "knockback": 400,
+    "allowedStates": ["idle", "walk", "crouch"]
+  }
+]

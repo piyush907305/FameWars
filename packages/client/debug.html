@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fame Wars · Combat lab</title>
+    <style>
+      body {
+        margin: 0;
+        background: #111f30;
+        color: #d7ff79;
+        font: 14px monospace;
+      }
+      canvas {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+      }
+      pre {
+        position: absolute;
+        top: 12px;
+        left: 20px;
+        white-space: pre-wrap;
+        pointer-events: none;
+      }
+      button {
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <pre id="stats"></pre>
+    <button id="reset">Reset match</button>
+    <script type="module" src="/src/debug.ts"></script>
+  </body>
+</html>

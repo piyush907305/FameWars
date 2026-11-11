@@ -1,0 +1,32 @@
+name: Preserve original Phase 1 Git history
+on:
+  push:
+    branches: [feat/phase1-prototype]
+    paths: ['.handoff/phase1-history.bundle', '.github/workflows/restore-history.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - name: Verify and import original objects
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '8ad67a7668cb8bf8778085d720b581138e329c7fb8942da531f43fd422c011ab  .handoff/phase1-history.bundle' | sha256sum --check
+          git bundle verify .handoff/phase1-history.bundle
+          git fetch --no-tags .handoff/phase1-history.bundle refs/heads/main:refs/heads/archive/phase1-local
+          test "$(git rev-parse archive/phase1-local)" = '8891f885a9fd90295adb1a5dbafa5995f998193c'
+          git fetch --no-tags .handoff/phase1-history.bundle refs/tags/v0.0.0:refs/tags/v0.0.0 refs/tags/v0.1.0:refs/tags/v0.1.0
+          for name in docs/phase1-baseline feat/01-sim-core feat/02-debug-renderer feat/03-placeholder-stage feat/04-round-rules feat/05-cpu feat/06-ui-controls feat/07-finisher feat/08-verification; do
+            git fetch --no-tags .handoff/phase1-history.bundle "refs/remotes/origin/$name:refs/heads/archive/checkpoints/$name"
+          done
+      - name: Publish history and original tags without force
+        shell: bash
+        run: |
+          set -euo pipefail
+          git push origin 'refs/heads/archive/*:refs/heads/archive/*' refs/tags/v0.0.0 refs/tags/v0.1.0
