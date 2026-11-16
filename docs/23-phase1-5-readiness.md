@@ -17,11 +17,11 @@ Engineering self-review, not independent third-party approval: inspected simulat
 
 | Gate | Status |
 |---|---|
-| 10,000-tick recorded golden replay | Verified in CI on 6c43dbf; full-match completion assertion strengthened in Step 0 |
+| 10,000-tick recorded golden replay | Verified in CI run 43868847596; complete-match hash d1553867 |
 | Fast PR checks / nightly full match | Implemented; CI result pending at authoring |
 | Original Git history / remote tags | Original commit graph preserved at archive/phase1-local; v0.1.0 published at ba03c35 |
-| PR review / merge | This self-review recorded; merge waits for successful updated checks |
-| Public preview | Pages source configured; deployment pending merge |
+| PR review / merge | Self-review recorded; PR #1 merged at 82acfc8 after passing CI |
+| Public preview | Public Pages deployment succeeded; see document 24 |
 | Budget Android | NOT TESTED; device/access pending |
 | Mid-range Android | NOT TESTED; device/access pending |
 | Physical touch / 4G / thermal | NOT TESTED |
@@ -35,7 +35,7 @@ Use the budget and mid-range devices in document 06 when available (Redmi 9A or 
 1. Open the public preview in Chrome. Record URL, Git commit/build, exact device model, Android/Chrome versions, RAM, battery %, brightness and connection. Complete the adult/disclaimer gate personally.
 2. Cold-load ten times with cache disabled, selecting both fighters and starting a CPU match. Record time to movement/attack, HAR transfer bytes, median/p75/p95. Compare the <8,000,000-byte and document 06 load gates. HTTPS loopback on the developer computer is not a substitute.
 3. Run 20 minutes of repeated matches, 50% brightness, audio 30%, unplugged on actual 4G, beginning above 50% battery. Repeat twice. Log background interruptions separately.
-4. Use the debug overlay and Chrome remote Performance tooling for a separate timing run. The current canvas `data-frame-intervals` retains at most 3,600 frames; export it at each one-minute segment. Do not mistake its rolling FPS readout for a 20-minute minimum. Capture p95/p99 intervals, any >2-second rolling interval below 30 FPS, draw calls, context losses and crashes.
+4. Use the debug overlay and Chrome remote Performance tooling for a separate timing run. The opt-in device-test recorder (document 24) captures up to 200,000 active frame intervals and exports JSON. The older debug canvas history retains only 3,600 frames; do not use that rolling buffer as a whole-run measurement. Do not mistake its rolling FPS readout for a 20-minute minimum. Capture p95/p99 intervals, any >2-second rolling interval below 30 FPS, draw calls, context losses and crashes.
 5. Capture memory in a separate profiling run after warm-up and ten rematches. Report unavailable memory/thermal telemetry as unavailable. Do not use profiler-attached results for the final battery run.
 6. Test movement + attack simultaneously, crouch-block, dash, jump, super with full meter, pause, orientation, suspend/resume, audio interruption and Hindi clipping. Use a high-speed camera for input-to-display latency if available; event timings alone do not measure display latency.
 7. Write subjective feel notes per device: readability, touch reach, accidental inputs, response, hit feedback, difficulty and fatigue. These are tester observations, not inferred from desktop FPS.
