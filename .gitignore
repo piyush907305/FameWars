@@ -1,0 +1,17 @@
+.DS_Store
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+*.log
+assets/source/private/
+
+.cache/
+.sites-runtime/
+
+# Also ignore a local dependency symlink used for portable verification.
+node_modules

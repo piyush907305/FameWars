@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["vitest/globals", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@fame/sim": ["packages/sim/src/index.ts"],
+      "@fame/content": ["packages/content/src/index.ts"],
+      "@fame/ai": ["packages/ai/src/index.ts"]
+    }
+  },
+  "include": ["packages", "tests", "scripts", "*.ts"]
+}
