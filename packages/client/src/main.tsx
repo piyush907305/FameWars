@@ -5,6 +5,7 @@ import { createMatch, step, type MatchState } from '@fame/sim';
 import { cpuInput, type Difficulty } from '@fame/ai';
 import { Renderer } from './render';
 import { Audio } from './audio';
+import { DeviceProbe } from './performance';
 import { InputManager, defaults, actionNames } from './input';
 import { text, type Language } from './ui/i18n';
 import './ui/style.css';
@@ -32,6 +33,18 @@ const store = (key: string, value: string) => {
   }
 };
 function App() {
+  const [deviceProbe] = useState(() => new DeviceProbe());
+  const deviceTest = new URLSearchParams(location.search).has('deviceTest');
+  const exportDeviceReport = () => {
+    const memory = performance as Performance & { memory?: { usedJSHeapSize: number } };
+    deviceProbe.observeHeap(memory.memory?.usedJSHeapSize);
+    const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+    const report = { ...deviceProbe.report(), build: import.meta.env.VITE_BUILD_SHA ?? 'unidentified-local', browser: navigator.userAgent, viewport: {width: innerWidth,height: innerHeight,dpr: devicePixelRatio}, pageLoadEventMs: nav?.loadEventEnd ?? null, observedEncodedResponseBodyBytes: (nav?.encodedBodySize ?? 0) + resources.reduce((sum,r)=>sum+r.encodedBodySize,0), zeroSizeResourceEntries: resources.filter(r=>r.encodedBodySize===0).length, loadNote: 'Navigation load event is not first playable. Cached or restricted timing entries can have zero size. Record cold load to first movement separately; no bandwidth gate is automatically passed.' };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));
+    const a = document.createElement('a'); a.href=url; a.download='fame-wars-device-report.json'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
   const [lang, setLang] = useState<Language>(read('fame.lang', 'en') === 'hi' ? 'hi' : 'en'),
     [screen, setScreen] = useState<Screen>(
       read('fame.disclaimer', '') === '1' ? 'title' : 'disclaimer',
@@ -130,6 +143,7 @@ function App() {
         }
       } else accumulator = 0;
       renderer.draw(rt.state, rt.previous, Math.min(1, accumulator / (1000 / 60)));
+      if (deviceTest) deviceProbe.frame(delta, o.screen === 'fight' && !o.paused && !o.settings && !document.hidden);
       if (o.debug && o.screen === 'fight' && !o.paused && delta > 0) {
         intervals.push(delta);
         if (intervals.length > 3600) intervals.shift();
@@ -138,6 +152,7 @@ function App() {
       canvas.current!.dataset.triangles = String(renderer.triangles);
       frames++;
       if (now - measureStart >= 500) {
+        if (deviceTest) deviceProbe.observeHeap((performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize);
         setFps(Math.round((frames * 1000) / (now - measureStart)));
         setDraws(renderer.drawCalls);
         if (o.debug) canvas.current!.dataset.frameIntervals = JSON.stringify(intervals);
@@ -710,6 +725,16 @@ function App() {
               {t.subtitles} · Gamepad: A jump / X light / Y heavy / B kick / LB block / RB dash / RT
               super.
             </p>
+            {deviceTest && (
+              <section aria-label="Device test report">
+                <h2>{lang === 'hi' ? 'डिवाइस परीक्षण' : 'Device test'}</h2>
+                <p className="setting-note">Active gameplay: {Math.floor(deviceProbe.activeMs / 1000)} / {deviceProbe.targetMs / 1000} seconds. Menus and pauses do not count. Reports stay on this device.</p>
+                <button className="secondary" onClick={() => { deviceProbe.start(300000,new Date().toISOString()); setSettings(false); setPaused(false); }}>Start 5-minute screen</button>
+                <button className="secondary" onClick={() => { deviceProbe.start(1200000,new Date().toISOString()); setSettings(false); setPaused(false); }}>Start 20-minute sustained test</button>
+                <button className="secondary" disabled={!deviceProbe.startedAt} onClick={exportDeviceReport}>Download device report</button>
+                <p className="setting-note">Run repeated matches, then Pause → Settings → Download. An incomplete report does not pass a device gate. Record phone model, cold first-playable load time, battery and heat separately.</p>
+              </section>
+            )}
             <h2>{t.controls}</h2>
             <div className="bindings" key={bindingRevision}>
               {([0, 1] as const).map((player) => (
