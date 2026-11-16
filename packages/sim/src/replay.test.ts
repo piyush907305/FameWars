@@ -4,7 +4,7 @@ import { createMatch, stateHash, step, type Input, type MatchState } from './ind
 import recording from '../../../tests/replays/10000-ticks.json';
 
 describe('recorded 10,000-tick headless replay', () => {
-  it('matches its golden hash and survives a JSON snapshot at tick 5,000', () => {
+  it('completes a best-of-three, matches its golden hash and restores a tick-5,000 snapshot', () => {
     let live = createMatch(content, undefined, recording.seed);
     let restored: MatchState | undefined;
     const before = JSON.stringify(recording);
@@ -27,6 +27,8 @@ describe('recorded 10,000-tick headless replay', () => {
     expect(ticks).toBe(10000);
     expect(ticks).toBe(recording.ticks);
     expect(live.tick).toBe(10000);
+    expect(live.phase).toBe('matchResult');
+    expect(live.wins).toEqual([2, 0]);
     expect(combatTicks).toBeGreaterThan(500);
     expect(stateHash(live)).toBe(recording.expectedHash);
     expect(restored).toEqual(live);

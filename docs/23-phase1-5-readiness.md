@@ -7,19 +7,19 @@ Phase 2 asset generation/spending is gated on physical Android results. Original
 Engineering self-review, not independent third-party approval: inspected simulation/state transitions, simultaneous hits, stamina/timeout rules, input sampling and buffer, content validation, renderer separation, browser lifecycle and CI. No blocking gameplay defect identified in this pass. The review found delivery and verification gaps addressed below; passing tests are not a subjective feel endorsement.
 
 - Existing 10,000-tick twin-run determinism test compares hashes every tick. Existing recorded 900-tick golden replay hash: `49fabaf6`. Both existed in Phase 1.
-- New recorded 10,000-tick RLE fixture extends the recorded script with neutral input; golden hash `b49be243`. It verifies exact tick count, input immutability, state immutability, and JSON restore at tick 5,000. This is same-engine deterministic replay, not proof of cross-engine/rollback readiness. Some ticks occur after the match ends; original twin-run test and combat rule tests remain.
+- New recorded 10,000-tick RLE fixture extends the recorded script with P2 held block; golden hash `d1553867`. It verifies exact tick count, input immutability, state immutability, and JSON restore at tick 5,000. This is same-engine deterministic replay, not proof of cross-engine/rollback readiness. It asserts matchResult and a 2–0 score, rather than only elapsed ticks. Some remaining ticks occur after match completion; the original twin-run and combat rule tests remain.
 - The renderer never writes simulation outcomes; browser timing only determines when fixed steps are called. Mobile frame stalls can still make controls feel poor; the device gate remains necessary.
 - Full rendered-match browser test previously passed in 7.3 minutes in CI. PRs now run fast headless replay plus settings/controls and touch-layout smoke tests. Full match remains available manually and nightly at 19:30 UTC (01:00 IST next day). Nightly timing is best effort on GitHub, not an exact execution guarantee.
 - Deployment uses a static GitHub Pages build under `/FameWars/`. Its two Pages actions were verified against upstream tag refs and pinned. No accounts, ads, analytics or production voices are introduced.
-- A checksum-verified bundle and one-time Actions job preserve original Git objects and checkpoint refs, with ordinary non-force pushes. The original `v0.1.0` tag retains its commit ID; later readiness-only work belongs to the main branch history. No published tag is rewritten.
+- A checksum-verified bundle imported original Git objects. The Actions token could not publish refs containing workflow history; the authorized connector preserved the original head at archive/phase1-local. The PR links that original head as a second parent, preserving the original commit graph without force-pushing. The original `v0.1.0` tag retains its commit ID; later readiness-only work belongs to the main branch history. No published tag is rewritten.
 
 ## Evidence status
 
 | Gate | Status |
 |---|---|
-| 10,000-tick recorded golden replay | Implemented; CI result pending at authoring |
+| 10,000-tick recorded golden replay | Verified in CI on 6c43dbf; full-match completion assertion strengthened in Step 0 |
 | Fast PR checks / nightly full match | Implemented; CI result pending at authoring |
-| Original Git history / remote tags | Preservation workflow prepared; remote verification pending |
+| Original Git history / remote tags | Original commit graph preserved at archive/phase1-local; v0.1.0 published at ba03c35 |
 | PR review / merge | This self-review recorded; merge waits for successful updated checks |
 | Public preview | Pages source configured; deployment pending merge |
 | Budget Android | NOT TESTED; device/access pending |
@@ -57,4 +57,4 @@ Use the budget and mid-range devices in document 06 when available (Redmi 9A or 
 
 ## Phase 2 asset gate
 
-No production AI models, voices or asset spending until both phone rows have real evidence, unresolved failures have a mitigation, and the owner approves Phase 2. Placeholder performance is a baseline with headroom, not proof that heavier production assets will fit. Start with one benchmark character and remeasure the same phones before roster expansion.
+Owner clarification (16 November 2026): first run a five-minute Step 0 screening test on each physical device; retain the separate 20-minute sustained gate before asset spending. No production AI models, voices or asset spending until both phone rows have real evidence, unresolved failures have a mitigation, and the owner approves Phase 2. Placeholder performance is a baseline with headroom, not proof that heavier production assets will fit. Start with one benchmark character and remeasure the same phones before roster expansion.

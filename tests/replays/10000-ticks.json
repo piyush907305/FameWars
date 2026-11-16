@@ -2,7 +2,7 @@
   "version": 1,
   "seed": 714,
   "ticks": 10000,
-  "source": "Recorded 900-tick Phase 1 sequence followed by neutral inputs; no rendering.",
+  "source": "Recorded 900-tick Phase 1 combat sequence, followed by P2 held block through tick 10,000 so the best-of-three match completes.",
   "runs": [
     {
       "ticks": 1,
@@ -3184,7 +3184,7 @@
           "axis": 0,
           "jump": false,
           "crouch": false,
-          "block": false,
+          "block": true,
           "light": false,
           "heavy": false,
           "kick": false,
@@ -3195,5 +3195,5 @@
       ]
     }
   ],
-  "expectedHash": "b49be243"
+  "expectedHash": "d1553867"
 }

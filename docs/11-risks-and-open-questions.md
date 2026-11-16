@@ -102,3 +102,10 @@ ASSUMPTION A35: GitHub Pages is the zero-cost static-hosting fallback after the 
 ASSUMPTION A36: nightly full-match run at 19:30 UTC (01:00 IST next day) is suitable; GitHub schedules may be delayed. Manual dispatch is available.
 ASSUMPTION A37: physical Android hardware and USB access must be supplied/confirmed by the owner; existing document 06 devices remain provisional targets. No device measurements are inferred from emulation.
 ASSUMPTION A38: original v0.1.0 tag is preserved at ba03c3513b1f685cc82ca4a90d11dc1611c6f020; readiness changes do not rewrite that tag. Main integrates their commits separately.
+
+
+## Step 0 clarification — 16 November 2026
+
+Owner approved five minutes per real device as the Step 0 screening duration, retaining the 20-minute sustained gate before Phase 2 asset spending. Owner will test a public URL on their phones; exact models, OS/browser versions and measured results are still pending. Samsung, OnePlus and Redmi are requested brand coverage, not evidence that any device passed.
+
+ASSUMPTION A39: mobile screening reports supplied by the owner will include exact device/model, build URL, Android/browser version and evidence. No FPS, memory, thermal, load-time or latency result is inferred from desktop emulation or brand names.
