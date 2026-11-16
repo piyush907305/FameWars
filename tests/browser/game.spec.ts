@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
-async function enter(page: Page) {
-  await page.goto('/');
+import { readFile } from 'node:fs/promises';
+async function enter(page: Page, path = '/') {
+  await page.goto(path);
   await page.getByRole('checkbox', { name: 'I am 18 or older' }).check();
   await page.getByRole('button', { name: /I understand/ }).click();
   await expect(page.getByRole('heading', { name: /FAME/ })).toBeVisible();
@@ -77,4 +78,23 @@ test('landscape touch targets and portrait prompt', async ({ browser }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole('heading', { name: 'Turn your phone' })).toBeVisible();
   await ctx.close();
+});
+
+test('opt-in device recorder exports an incomplete capture without counting menu time', async ({ page }) => {
+  await enter(page, '/?deviceTest=1');
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  await expect(page.getByRole('region', { name: 'Device test report' })).toBeVisible();
+  await page.getByRole('button', { name: 'Start 5-minute screen', exact: true }).click();
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const downloading = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download device report', exact: true }).click();
+  const download = await downloading;
+  const path = await download.path();
+  expect(path).toBeTruthy();
+  const report = JSON.parse(await readFile(path!, 'utf8'));
+  expect(report.requestedActiveMs).toBe(300000);
+  expect(report.complete).toBe(false);
+  expect(report.validFrameTimeCapture).toBe(false);
+  expect(report.activeFrameSamples).toBe(0);
+  expect(report.averageFps).toBeNull();
 });

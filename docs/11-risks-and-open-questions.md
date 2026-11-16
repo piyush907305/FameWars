@@ -109,3 +109,6 @@ ASSUMPTION A38: original v0.1.0 tag is preserved at ba03c3513b1f685cc82ca4a90d11
 Owner approved five minutes per real device as the Step 0 screening duration, retaining the 20-minute sustained gate before Phase 2 asset spending. Owner will test a public URL on their phones; exact models, OS/browser versions and measured results are still pending. Samsung, OnePlus and Redmi are requested brand coverage, not evidence that any device passed.
 
 ASSUMPTION A39: mobile screening reports supplied by the owner will include exact device/model, build URL, Android/browser version and evidence. No FPS, memory, thermal, load-time or latency result is inferred from desktop emulation or brand names.
+
+
+ASSUMPTION A40: the opt-in device report is a diagnostic instrument, not analytics. It captures foreground unpaused gameplay/finisher frame intervals and optional nonstandard Chromium heap samples; menus/pauses/results/hidden time are excluded. Owner supplies exact hardware, cold first-playable load, battery and heat observations. Missing or incomplete data never passes a gate. No report is automatically uploaded.
