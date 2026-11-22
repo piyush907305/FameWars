@@ -23,7 +23,9 @@
     "test:replay": "vitest run packages/sim/src/replay.test.ts",
     "test:e2e:smoke": "playwright test --grep-invert @full-match",
     "test:e2e:full": "playwright test --grep @full-match",
-    "record:replay:10000": "node scripts/run-sim.mjs record-replay-10000"
+    "record:replay:10000": "node scripts/run-sim.mjs record-replay-10000",
+    "sim:specials": "node scripts/run-sim.mjs sim-specials",
+    "test:specials": "vitest run packages/sim/src/specials.test.ts"
   },
   "dependencies": {
     "react": "19.1.10",

@@ -4,6 +4,9 @@ import moveData from '../data/moves.json';
 import arenaData from '../data/arena.json';
 import balanceData from '../data/balance.json';
 import dialogueData from '../data/dialogue.json';
+import specialData from '../data/specials.json';
+import { parseSpecialContent, type SpecialContent } from './specials';
+export * from './specials';
 const integer = z.number().int().nonnegative().max(100000);
 const localized = z.object({ en: z.string().min(1), hi: z.string().min(1) }).strict();
 const provenance = z
@@ -114,6 +117,7 @@ export type FighterDef = z.infer<typeof FighterSchema>;
 export type Move = z.infer<typeof MoveSchema>;
 export type MoveId = Move['id'];
 export type Content = {
+  specials?: SpecialContent;
   fighters: FighterDef[];
   dialogue: z.infer<typeof DialogueSchema>[];
   moves: Move[];
@@ -141,7 +145,8 @@ export function loadContent(): Content {
     for (const id of f.dialogueIds)
       if (!dialogue.some((d) => d.id === id && d.fighterId === f.id))
         throw new Error('Missing dialogue ' + id);
-  return { fighters, moves, arena, balance, dialogue };
+  const specials = parseSpecialContent(specialData);
+  return { fighters, moves, arena, balance, dialogue, specials };
 }
 export const content = loadContent();
 

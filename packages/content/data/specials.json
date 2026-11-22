@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 2,
+  "revision": "phase2-specials-v1",
+  "enabled": false,
+  "cringe": {
+    "max": 1000,
+    "whiff": 60,
+    "blocked": 40,
+    "repeat": 80,
+    "repeatAfter": 3,
+    "cleanHit": 120
+  },
+  "definitions": [
+    {
+      "id": "mic-drop",
+      "fighterId": "bhai-blaze",
+      "enabled": false,
+      "licenseStatus": "original",
+      "kind": "counter",
+      "allowedStates": ["idle", "walk", "crouch"],
+      "meterCost": 1000,
+      "staminaCost": 2400,
+      "durationTicks": 150,
+      "stages": [
+        {
+          "id": "silence-counter",
+          "startup": 12,
+          "active": 6,
+          "recovery": 30
+        },
+        {
+          "id": "sonic-blast",
+          "startup": 12,
+          "active": 6,
+          "recovery": 84
+        }
+      ],
+      "counterWindow": [0, 10],
+      "capture": [10, 90],
+      "invulnerability": [10, 66],
+      "hitStop": 4,
+      "damageCap": 260,
+      "hits": [
+        {
+          "id": "sonic-one",
+          "tick": 60,
+          "damage": 260,
+          "cringeBonus": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "w": 8000,
+            "h": 2500
+          },
+          "hitstun": 36,
+          "blockstun": 0,
+          "knockback": 800,
+          "blockable": false
+        }
+      ],
+      "cues": [
+        {
+          "tick": 0,
+          "kind": "pose",
+          "key": "raised-palm"
+        },
+        {
+          "tick": 10,
+          "kind": "vfx",
+          "key": "generic-mute-icon"
+        },
+        {
+          "tick": 48,
+          "kind": "vfx",
+          "key": "fictional-hype-silhouette"
+        },
+        {
+          "tick": 60,
+          "kind": "vfx",
+          "key": "soft-sonic-rings"
+        },
+        {
+          "tick": 120,
+          "kind": "camera",
+          "key": "return-combat"
+        }
+      ],
+      "judges": [],
+      "judgeCount": 0
+    },
+    {
+      "id": "latent-talent-round",
+      "fighterId": "jugad-jester",
+      "enabled": false,
+      "licenseStatus": "original",
+      "kind": "super",
+      "allowedStates": ["idle", "walk", "crouch"],
+      "meterCost": 1000,
+      "staminaCost": 2400,
+      "durationTicks": 180,
+      "stages": [
+        {
+          "id": "judge-cards",
+          "startup": 24,
+          "active": 6,
+          "recovery": 30
+        },
+        {
+          "id": "gameplay-roast",
+          "startup": 24,
+          "active": 6,
+          "recovery": 90
+        }
+      ],
+      "counterWindow": null,
+      "capture": null,
+      "invulnerability": null,
+      "hitStop": 3,
+      "damageCap": 320,
+      "hits": [
+        {
+          "id": "roast-one",
+          "tick": 84,
+          "damage": 160,
+          "cringeBonus": 160,
+          "box": {
+            "x": 100,
+            "y": 100,
+            "w": 1800,
+            "h": 1800
+          },
+          "hitstun": 30,
+          "blockstun": 18,
+          "knockback": 300,
+          "blockable": true
+        }
+      ],
+      "cues": [
+        {
+          "tick": 0,
+          "kind": "pose",
+          "key": "panel-intro"
+        },
+        {
+          "tick": 24,
+          "kind": "vfx",
+          "key": "three-fictional-judge-cards"
+        },
+        {
+          "tick": 84,
+          "kind": "vfx",
+          "key": "soft-caption-pop"
+        },
+        {
+          "tick": 150,
+          "kind": "camera",
+          "key": "return-combat"
+        }
+      ],
+      "judges": ["judge-comma", "judge-rewind", "judge-checklist", "judge-pause"],
+      "judgeCount": 3
+    },
+    {
+      "id": "pinjra-band",
+      "fighterId": "quizmaster-kumar",
+      "enabled": false,
+      "licenseStatus": "original",
+      "kind": "finisher",
+      "allowedStates": ["idle", "walk", "crouch"],
+      "meterCost": 0,
+      "staminaCost": 0,
+      "durationTicks": 180,
+      "stages": [
+        {
+          "id": "indigo-confetti",
+          "startup": 30,
+          "active": 1,
+          "recovery": 29
+        },
+        {
+          "id": "enclosure-and-wave",
+          "startup": 18,
+          "active": 1,
+          "recovery": 101
+        }
+      ],
+      "counterWindow": null,
+      "capture": null,
+      "invulnerability": null,
+      "hitStop": 0,
+      "damageCap": 0,
+      "hits": [],
+      "cues": [
+        {
+          "tick": 0,
+          "kind": "vfx",
+          "key": "gradual-indigo-tint"
+        },
+        {
+          "tick": 30,
+          "kind": "vfx",
+          "key": "pooled-confetti"
+        },
+        {
+          "tick": 78,
+          "kind": "vfx",
+          "key": "stylised-transparent-enclosure"
+        },
+        {
+          "tick": 120,
+          "kind": "pose",
+          "key": "original-small-wave"
+        }
+      ],
+      "judges": [],
+      "judgeCount": 0
+    },
+    {
+      "id": "shohrat-pehle",
+      "fighterId": "seth-sitara",
+      "enabled": false,
+      "licenseStatus": "original",
+      "kind": "counter",
+      "allowedStates": ["idle", "walk", "crouch"],
+      "meterCost": 1000,
+      "staminaCost": 2400,
+      "durationTicks": 180,
+      "stages": [
+        {
+          "id": "spotlight-and-letters",
+          "startup": 18,
+          "active": 6,
+          "recovery": 36
+        },
+        {
+          "id": "prop-storm",
+          "startup": 12,
+          "active": 72,
+          "recovery": 36
+        }
+      ],
+      "counterWindow": [0, 12],
+      "capture": [12, 156],
+      "invulnerability": [12, 156],
+      "hitStop": 3,
+      "damageCap": 300,
+      "hits": [
+        {
+          "id": "letters",
+          "tick": 18,
+          "damage": 120,
+          "cringeBonus": 0,
+          "box": {
+            "x": 100,
+            "y": 200,
+            "w": 1500,
+            "h": 1500
+          },
+          "hitstun": 24,
+          "blockstun": 0,
+          "knockback": 0,
+          "blockable": false
+        },
+        {
+          "id": "storm-1",
+          "tick": 78,
+          "damage": 60,
+          "cringeBonus": 0,
+          "box": {
+            "x": 100,
+            "y": 200,
+            "w": 1500,
+            "h": 1500
+          },
+          "hitstun": 18,
+          "blockstun": 0,
+          "knockback": 60,
+          "blockable": false
+        },
+        {
+          "id": "storm-2",
+          "tick": 102,
+          "damage": 60,
+          "cringeBonus": 0,
+          "box": {
+            "x": 100,
+            "y": 200,
+            "w": 1500,
+            "h": 1500
+          },
+          "hitstun": 18,
+          "blockstun": 0,
+          "knockback": 60,
+          "blockable": false
+        },
+        {
+          "id": "storm-3",
+          "tick": 126,
+          "damage": 60,
+          "cringeBonus": 0,
+          "box": {
+            "x": 100,
+            "y": 200,
+            "w": 1500,
+            "h": 1500
+          },
+          "hitstun": 24,
+          "blockstun": 0,
+          "knockback": 240,
+          "blockable": false
+        }
+      ],
+      "cues": [
+        {
+          "tick": 0,
+          "kind": "pose",
+          "key": "spotlight-ready"
+        },
+        {
+          "tick": 12,
+          "kind": "camera",
+          "key": "two-shot-medium"
+        },
+        {
+          "tick": 18,
+          "kind": "vfx",
+          "key": "original-gold-shohrat-letters"
+        },
+        {
+          "tick": 60,
+          "kind": "vfx",
+          "key": "abstract-notes-coins-briefcases-instanced"
+        },
+        {
+          "tick": 156,
+          "kind": "camera",
+          "key": "return-combat"
+        }
+      ],
+      "judges": [],
+      "judgeCount": 0
+    }
+  ]
+}

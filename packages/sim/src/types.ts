@@ -63,12 +63,59 @@ export type Phase = 'fight' | 'finisher' | 'roundResult' | 'matchResult';
 export type SimEvent = {
   id: number;
   tick: number;
-  kind: 'hit' | 'block' | 'stagger' | 'roundEnd' | 'finisher' | 'roundStart';
+  kind:
+    | 'hit'
+    | 'block'
+    | 'stagger'
+    | 'roundEnd'
+    | 'finisher'
+    | 'roundStart'
+    | 'specialStart'
+    | 'specialStage'
+    | 'specialCue'
+    | 'counter'
+    | 'specialEnd';
   actor: number;
   target: number;
+  special?: {
+    instance: number;
+    id: string;
+    localTick: number;
+    stage: number;
+    cue?: string;
+    cueKind?: string;
+    judges?: string[];
+  };
+};
+export type SpecialRun = {
+  instance: number;
+  id: string;
+  localTick: number;
+  stage: number;
+  confirmed: boolean;
+  target: number | null;
+  consumedHits: string[];
+  targetX: number;
+  targetY: number;
+  cringeAtStart: number;
+  judges: string[];
+};
+export type CombatExtension = {
+  cringe: number;
+  lastMove: MoveId | null;
+  repeatCount: number;
+  ordinary: { id: number; move: MoveId; reachedActive: boolean; contacted: boolean } | null;
+  run: SpecialRun | null;
+};
+export type SpecialSnapshot = {
+  version: 2;
+  contentRevision: string;
+  nextInstance: number;
+  actors: [CombatExtension, CombatExtension];
 };
 export type MatchState = {
-  version: 1;
+  version: 1 | 2;
+  specials?: SpecialSnapshot;
   tick: number;
   rng: number;
   phase: Phase;
