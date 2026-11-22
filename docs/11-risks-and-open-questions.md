@@ -112,3 +112,13 @@ ASSUMPTION A39: mobile screening reports supplied by the owner will include exac
 
 
 ASSUMPTION A40: the opt-in device report is a diagnostic instrument, not analytics. It captures foreground unpaused gameplay/finisher frame intervals and optional nonstandard Chromium heap samples; menus/pauses/results/hidden time are excluded. Owner supplies exact hardware, cold first-playable load, battery and heat observations. Missing or incomplete data never passes a gate. No report is automatically uploaded.
+
+## Phase 2 architecture approval — 2026-11-21/22
+
+Owner approved implementation of staged-special, counter and per-actor cringe-state architecture. See25-phase2-special-architecture.md. New mechanics are opt-in and draft roster records remain disabled. Toolchain approval (zero-spend, Seth V4) is separate from appearance/licence/resemblance and physical-device gates.
+
+ASSUMPTION A41: all numeric values in packages/content/data/specials.json (frames, costs, damage, ranges, hitboxes, cringe, judge counts) are starting tuning proposals, not a balanced release. Owner architecture approval is not proof of balance or measured device performance.
+
+ASSUMPTION A42: a presentation event vocabulary with instance/stage/cue identifiers can drive future assets without changing outcomes. Actual cinematic/animation integration and duration/contact checks remain later checkpoints. Version2 snapshot checks reject revision/version mismatches but are not full untrusted network payload validation.
+
+ASSUMPTION A43: the supplied five-minute screenshot is provisional physical-device evidence only. Source audit found no demonstrated average-FPS formula error. Original JSON, phone identification, second hardware class and retained twenty-minute gate remain outstanding; no memory/thermal/first-play load pass inferred.

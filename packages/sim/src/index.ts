@@ -1,5 +1,24 @@
 import type { Actor, ActorState, Content, Input, MatchState, Rect, Action } from './types';
 import { neutral } from './types';
+import {
+  newSpecialSnapshot,
+  assertSpecialSnapshot,
+  binding,
+  beginSpecial,
+  advanceSpecial,
+  capturedBy,
+  invulnerable,
+  counterIncoming,
+  resolveSpecialHits,
+  startOrdinary,
+  endOrdinary,
+  ordinaryContact,
+  applyCringe,
+  cancelSpecial,
+  cancelAll,
+  stepFinisher,
+  specialHitbox,
+} from './specials';
 export * from './types';
 const activeStates: ActorState[] = [
   'idle',
@@ -67,7 +86,7 @@ export function createMatch(
     } as Actor;
   }) as [Actor, Actor];
   return {
-    version: 1,
+    version: c.specials?.enabled ? 2 : 1,
     tick: 0,
     rng: seed >>> 0 || 1,
     phase: 'fight',
@@ -85,6 +104,7 @@ export function createMatch(
     eventCounter: 0,
     hitStop: 0,
     terminal: null,
+    ...(c.specials?.enabled ? { specials: newSpecialSnapshot(c) } : {}),
   };
 }
 export function hurtbox(a: Actor, c: Content): Rect {
@@ -109,18 +129,32 @@ export function attackbox(a: Actor, c: Content): Rect | null {
 export function overlaps(a: Rect, b: Rect): boolean {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 }
+// Presentation/debug consumers query the authoritative active stage, never bones.
+export function combatHitbox(s: MatchState, i: 0 | 1, c: Content): Rect | null {
+  return s.specials?.actors[i].run ? specialHitbox(s, i, c) : attackbox(s.actors[i], c);
+}
 function emit(
   s: MatchState,
   kind: MatchState['events'][number]['kind'],
   actor: number,
   target = 1 - actor,
+  special?: MatchState['events'][number]['special'],
 ) {
-  s.events.push({ id: ++s.eventCounter, tick: s.tick, kind, actor, target });
+  s.events.push({
+    id: ++s.eventCounter,
+    tick: s.tick,
+    kind,
+    actor,
+    target,
+    ...(special ? { special } : {}),
+  });
 }
+const hooks = { transition, emit, random: randomStep, hurtbox, overlaps };
 function startRound(s: MatchState, c: Content) {
   const ids = s.actors.map((a) => a.id) as [string, string];
   const fresh = createMatch(c, ids, s.rng);
   s.actors = fresh.actors;
+  if (fresh.specials) s.specials = fresh.specials;
   s.previous = fresh.previous;
   s.remaining = c.balance.roundTicks;
   s.suddenDeath = false;
@@ -145,6 +179,7 @@ function sudden(s: MatchState, c: Content) {
   }
   const fresh = createMatch(c, s.actors.map((a) => a.id) as [string, string], s.rng);
   s.actors = fresh.actors;
+  if (fresh.specials) s.specials = fresh.specials;
   for (const a of s.actors) {
     a.health = c.balance.suddenDeathHealth;
     a.stamina = c.balance.suddenDeathStamina;
@@ -155,6 +190,7 @@ function sudden(s: MatchState, c: Content) {
   s.hitStop = 0;
 }
 function finish(s: MatchState, winner: 0 | 1, c: Content, reason: MatchState['reason']) {
+  cancelAll(s, hooks);
   s.winner = winner;
   s.reason = reason;
   s.wins[winner]++;
@@ -170,7 +206,8 @@ function finish(s: MatchState, winner: 0 | 1, c: Content, reason: MatchState['re
   transition(s.actors[1 - winner]!, 'KO');
   emit(s, 'roundEnd', winner);
   emit(s, 'finisher', winner);
-  void c;
+  const finisher = binding(s, winner, c, true);
+  if (finisher) beginSpecial(s, winner, finisher, c, hooks, true);
 }
 const canAct = (a: Actor) =>
   ['idle', 'walk', 'crouch', 'block'].includes(a.state) && a.y === 0 && a.landingTicks === 0;
@@ -180,7 +217,12 @@ function actionEdge(input: Input, previous: Input): Action | null {
   return null;
 }
 export function step(state: MatchState, inputs: readonly [Input, Input], c: Content): MatchState {
+  assertSpecialSnapshot(state, c);
+  // Combat cinematic skip belongs to presentation, not the authoritative replay.
+  if (c.specials?.enabled && state.phase === 'fight')
+    inputs = inputs.map((i) => ({ ...i, skip: false })) as [Input, Input];
   const s: MatchState = structuredClone(state);
+  const cringeDeltas = [0, 0];
   s.tick++;
   s.events = [];
   s.rng = randomStep(s.rng);
@@ -192,10 +234,12 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
     return s;
   }
   if (s.phase === 'finisher') {
+    stepFinisher(s, c, hooks);
     if (
       s.phaseTicks >= b.finisherTicks ||
       (s.phaseTicks >= b.finisherSkipAfter && inputs.some((i) => i.skip))
     ) {
+      cancelAll(s, hooks);
       if (s.winner !== null) transition(s.actors[s.winner], 'win');
       s.phase = s.wins.some((w) => w >= 2) ? 'matchResult' : 'roundResult';
       s.phaseTicks = 0;
@@ -204,6 +248,10 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
   }
   // Register attack edges during hit stop too; the three-frame buffer is sim-tick based.
   s.actors.forEach((a, i) => {
+    if (capturedBy(s, i, c)) {
+      a.buffer = null;
+      return;
+    }
     const edge = actionEdge(inputs[i]!, s.previous[i]!);
     if (edge) {
       a.buffer = edge;
@@ -217,9 +265,21 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
     return s;
   }
   s.remaining--;
+  // Advance both clocks before querying captures: actor slot must not shift a boundary.
+  s.actors.forEach((a, i) => {
+    if (a.state === 'attack' && s.specials?.actors[i]!.run) advanceSpecial(s, i, c, hooks);
+  });
   s.actors.forEach((a, i) => {
     const input = inputs[i]!;
     const other = s.actors[1 - i]!;
+    const capture = capturedBy(s, i, c);
+    if (capture) {
+      a.x = capture.targetX;
+      a.y = capture.targetY;
+      a.vy = 0;
+      a.buffer = null;
+      return;
+    }
     if (a.y > 0 && a.state !== 'jump') {
       a.vy -= b.gravity;
       a.y = Math.max(0, a.y + a.vy);
@@ -234,10 +294,14 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
         transition(a, a.y > 0 ? 'jump' : 'idle');
       } else return;
     }
+    if (a.state === 'attack' && s.specials?.actors[i]!.run) return;
     if (a.state === 'attack') {
       const m = c.moves.find((m) => m.id === a.move)!;
       a.moveFrame++;
+      const ordinary = s.specials?.actors[i]!.ordinary;
+      if (ordinary && a.moveFrame >= m.startup) ordinary.reachedActive = true;
       if (a.moveFrame >= m.startup + m.active + m.recovery) {
+        endOrdinary(s, i, c, cringeDeltas);
         a.move = null;
         transition(a, 'idle');
       } else return;
@@ -269,7 +333,11 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
         a.idleTicks = 0;
         return;
       }
-      const m = c.moves.find((m) => m.id === action);
+      const special = action === 'super' ? binding(s, i, c) : undefined;
+      if (special) {
+        if (beginSpecial(s, i, special, c, hooks)) return;
+      }
+      const m = special ? undefined : c.moves.find((m) => m.id === action);
       if (
         m &&
         m.allowedStates.some((allowed) => allowed === a.state) &&
@@ -285,6 +353,7 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
         a.buffer = null;
         a.idleTicks = 0;
         transition(a, 'attack');
+        startOrdinary(s, i, m.id, c, cringeDeltas);
         return;
       }
     }
@@ -335,9 +404,11 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
     a1.x += shift;
   }
   const hits = s.actors.map((a, i) => {
+    if (s.specials?.actors[i]!.run) return null;
     const box = attackbox(a, c);
     const target = s.actors[1 - i]!;
-    if (!box || a.didHit || !overlaps(box, hurtbox(target, c))) return null;
+    if (!box || a.didHit || invulnerable(s, 1 - i, c) || !overlaps(box, hurtbox(target, c)))
+      return null;
     const m = c.moves.find((m) => m.id === a.move)!;
     const defended =
       target.state === 'block' &&
@@ -346,7 +417,17 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
       target.facing === -a.facing;
     return { i, m, defended, facing: a.facing };
   });
-  for (const hit of hits) {
+  const countered = hits.map((hit) =>
+    hit
+      ? counterIncoming(s, 1 - hit.i, hit.i, hit.m.hitLevel, hit.m.id === 'super', c, hooks)
+      : false,
+  );
+  hits.forEach((hit, i) => {
+    if (hit && !countered[i]) ordinaryContact(s, hit.i, hit.defended, c, cringeDeltas);
+  });
+  resolveSpecialHits(s, inputs, c, hooks);
+  for (let hitIndex = 0; hitIndex < hits.length; hitIndex++) {
+    const hit = countered[hitIndex] ? null : hits[hitIndex];
     if (!hit) continue;
     const { i, m, defended, facing } = hit;
     const attacker = s.actors[i]!,
@@ -357,6 +438,8 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
       emit(s, 'block', i);
     } else {
       target.health = Math.max(0, target.health - m.damage);
+      cancelSpecial(s, 1 - i, hooks);
+      if (s.specials) s.specials.actors[1 - i]!.ordinary = null;
       target.x += facing * m.knockback;
       target.move = null;
       target.dashTicks = 0;
@@ -365,12 +448,14 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
     }
     if (m.id !== 'super')
       attacker.meter = Math.min(b.meter, attacker.meter + (defended ? b.blockMeter : b.hitMeter));
-    s.hitStop = b.hitStopTicks;
+    s.hitStop = Math.max(s.hitStop, b.hitStopTicks);
   }
   for (const a of s.actors) {
     a.x = Math.max(c.arena.minX + radius(a), Math.min(c.arena.maxX - radius(a), a.x));
     if (a.health === 0) transition(a, 'KO');
     else if (a.stamina === 0 && a.state !== 'staggered') {
+      cancelSpecial(s, s.actors.indexOf(a), hooks);
+      if (s.specials) s.specials.actors[s.actors.indexOf(a)]!.ordinary = null;
       a.move = null;
       a.dashTicks = 0;
       a.idleTicks = 0;
@@ -378,6 +463,7 @@ export function step(state: MatchState, inputs: readonly [Input, Input], c: Cont
       emit(s, 'stagger', s.actors.indexOf(a));
     }
   }
+  applyCringe(s, c, cringeDeltas);
   const [a, d] = s.actors;
   if (a.health === 0 && d.health === 0) {
     if (a.stamina !== d.stamina) finish(s, a.stamina > d.stamina ? 0 : 1, c, 'KO');

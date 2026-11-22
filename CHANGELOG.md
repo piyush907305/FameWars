@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — Phase 2 architecture checkpoint
+
+- Added disabled-by-default staged special schemas/data, version2 deterministic snapshots, counters, serialised cringe/history and seeded judge choices. Version1 replay behaviour is preserved.
+- Added authoritative stage/cue/impact events, zero-damage post-round finisher validation and a presentation-safe combat skip contract. No production assets or roster activation.
+- Added21 special regression tests, a10,000-tick golden replay and headless four-profile demo; documented remaining device/content/art gates. Generated sim-tool output is excluded from source linting.
+
 ## Phase 1.5 — release readiness
 
 - Added a recorded 10,000-tick headless replay and JSON snapshot/resume golden-hash check.
